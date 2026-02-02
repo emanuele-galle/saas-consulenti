@@ -37,8 +37,13 @@ export const consultantsRouter = createTRPCRouter({
           include: {
             user: { select: { email: true, role: true } },
             landingPage: {
-              select: { id: true, slug: true, status: true, views: true },
-              include: { customDomain: { select: { id: true } } },
+              select: {
+                id: true,
+                slug: true,
+                status: true,
+                views: true,
+                customDomain: { select: { id: true } },
+              },
             },
           },
           orderBy: { createdAt: "desc" },
