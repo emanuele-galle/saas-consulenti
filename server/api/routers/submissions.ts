@@ -1,10 +1,13 @@
 import { z } from "zod";
+import { TRPCError } from "@trpc/server";
 import {
   createTRPCRouter,
   publicProcedure,
   protectedProcedure,
   adminProcedure,
 } from "@/server/api/trpc";
+import { sendEmail } from "@/lib/email";
+import { contactNotificationTemplate } from "@/lib/email-templates/contact-notification";
 
 export const submissionsRouter = createTRPCRouter({
   // Submit contact form (public)
@@ -18,12 +21,84 @@ export const submissionsRouter = createTRPCRouter({
         phone: z.string().optional(),
         message: z.string().optional(),
         isExistingClient: z.boolean().default(false),
+        honeypot: z.string().optional(),
+        formLoadedAt: z.number().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.contactSubmission.create({
-        data: input,
+      // Anti-spam: honeypot check
+      if (input.honeypot) {
+        // Silently reject bots that fill hidden fields
+        return { id: "ok" };
+      }
+
+      // Anti-spam: timing check (minimum 3 seconds)
+      if (input.formLoadedAt) {
+        const elapsed = Date.now() - input.formLoadedAt;
+        if (elapsed < 3000) {
+          return { id: "ok" };
+        }
+      }
+
+      // Anti-spam: rate limit (max 3 per landing page per 60s)
+      const oneMinuteAgo = new Date(Date.now() - 60_000);
+      const recentCount = await ctx.db.contactSubmission.count({
+        where: {
+          landingPageId: input.landingPageId,
+          createdAt: { gte: oneMinuteAgo },
+        },
       });
+      if (recentCount >= 3) {
+        throw new TRPCError({
+          code: "TOO_MANY_REQUESTS",
+          message: "Troppe richieste. Riprova fra un minuto.",
+        });
+      }
+
+      const { honeypot: _h, formLoadedAt: _f, ...submissionData } = input;
+
+      const submission = await ctx.db.contactSubmission.create({
+        data: submissionData,
+      });
+
+      // Send email notification (fire-and-forget)
+      ctx.db.landingPage
+        .findUnique({
+          where: { id: input.landingPageId },
+          include: {
+            consultant: {
+              select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+              },
+            },
+          },
+        })
+        .then((landingPage) => {
+          if (!landingPage?.consultant) return;
+          const c = landingPage.consultant;
+          sendEmail({
+            to: c.email,
+            subject: `Nuova richiesta di contatto da ${input.firstName} ${input.lastName}`,
+            html: contactNotificationTemplate({
+              consultantName: `${c.firstName} ${c.lastName}`,
+              firstName: input.firstName,
+              lastName: input.lastName,
+              email: input.email,
+              phone: input.phone,
+              message: input.message,
+              isExistingClient: input.isExistingClient,
+            }),
+          }).catch((err) => {
+            console.error("Failed to send contact notification email:", err);
+          });
+        })
+        .catch((err) => {
+          console.error("Failed to fetch consultant for email:", err);
+        });
+
+      return submission;
     }),
 
   // List submissions (admin sees all, consultant sees own)

@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { unlink } from "fs/promises";
+import path from "path";
 import {
   createTRPCRouter,
   adminProcedure,
@@ -8,6 +10,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
 import { slugify } from "@/lib/utils";
+import { UPLOAD_DIR } from "@/lib/upload";
 
 export const consultantsRouter = createTRPCRouter({
   // List all consultants (admin only)
@@ -120,6 +123,8 @@ export const consultantsRouter = createTRPCRouter({
         role: z.string().min(1),
         network: z.string().optional(),
         bio: z.string().optional(),
+        profileImage: z.string().optional(),
+        themeColor: z.string().optional(),
         consultantEmail: z.string().email(),
         phone: z.string().optional(),
         mobile: z.string().optional(),
@@ -133,6 +138,10 @@ export const consultantsRouter = createTRPCRouter({
         linkedinUrl: z.string().url().optional().or(z.literal("")),
         facebookUrl: z.string().url().optional().or(z.literal("")),
         twitterUrl: z.string().url().optional().or(z.literal("")),
+        instagramUrl: z.string().url().optional().or(z.literal("")),
+        tiktokUrl: z.string().url().optional().or(z.literal("")),
+        youtubeUrl: z.string().url().optional().or(z.literal("")),
+        websiteUrl: z.string().url().optional().or(z.literal("")),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -178,6 +187,8 @@ export const consultantsRouter = createTRPCRouter({
             role: input.role,
             network: input.network || null,
             bio: input.bio || null,
+            profileImage: input.profileImage || null,
+            themeColor: input.themeColor || null,
             email: input.consultantEmail,
             phone: input.phone || null,
             mobile: input.mobile || null,
@@ -191,6 +202,10 @@ export const consultantsRouter = createTRPCRouter({
             linkedinUrl: input.linkedinUrl || null,
             facebookUrl: input.facebookUrl || null,
             twitterUrl: input.twitterUrl || null,
+            instagramUrl: input.instagramUrl || null,
+            tiktokUrl: input.tiktokUrl || null,
+            youtubeUrl: input.youtubeUrl || null,
+            websiteUrl: input.websiteUrl || null,
           },
         });
 
@@ -220,6 +235,7 @@ export const consultantsRouter = createTRPCRouter({
         network: z.string().optional(),
         bio: z.string().optional(),
         profileImage: z.string().optional(),
+        themeColor: z.string().optional(),
         email: z.string().email().optional(),
         phone: z.string().optional(),
         mobile: z.string().optional(),
@@ -233,6 +249,10 @@ export const consultantsRouter = createTRPCRouter({
         linkedinUrl: z.string().optional(),
         facebookUrl: z.string().optional(),
         twitterUrl: z.string().optional(),
+        instagramUrl: z.string().optional(),
+        tiktokUrl: z.string().optional(),
+        youtubeUrl: z.string().optional(),
+        websiteUrl: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -265,11 +285,20 @@ export const consultantsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const consultant = await ctx.db.consultant.findUnique({
         where: { id: input.id },
-        select: { userId: true },
+        select: { userId: true, profileImage: true },
       });
 
       if (!consultant) {
         throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      // Clean up profile image file and media record
+      if (consultant.profileImage) {
+        const filename = consultant.profileImage.split("/").pop();
+        if (filename) {
+          unlink(path.join(UPLOAD_DIR, filename)).catch(() => {});
+          ctx.db.media.deleteMany({ where: { filename } }).catch(() => {});
+        }
       }
 
       // Delete user (cascades to consultant, landing page, etc.)

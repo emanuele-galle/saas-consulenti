@@ -10,6 +10,10 @@ import { Plus, Trash2 } from "lucide-react";
 interface Skill {
   name: string;
   description?: string;
+  icon?: string;
+  imageIcon?: string;
+  imageUrl?: string;
+  linkUrl?: string;
 }
 
 interface SkillsData {
@@ -17,7 +21,7 @@ interface SkillsData {
 }
 
 interface SkillsFormValues {
-  skills: Array<{ name: string; description: string }>;
+  skills: Array<{ name: string; description: string; icon: string; imageIcon: string; imageUrl: string; linkUrl: string }>;
 }
 
 interface SkillsEditorProps {
@@ -30,6 +34,10 @@ function toFormValues(data: SkillsData): SkillsFormValues {
     skills: (data.skills ?? []).map((s) => ({
       name: s.name,
       description: s.description ?? "",
+      icon: s.icon ?? "",
+      imageIcon: s.imageIcon ?? "",
+      imageUrl: s.imageUrl ?? "",
+      linkUrl: s.linkUrl ?? "",
     })),
   };
 }
@@ -41,6 +49,10 @@ function toSkillsData(values: SkillsFormValues): SkillsData {
       .map((s) => ({
         name: s.name,
         description: s.description || undefined,
+        icon: s.icon || undefined,
+        imageIcon: s.imageIcon || undefined,
+        imageUrl: s.imageUrl || undefined,
+        linkUrl: s.linkUrl || undefined,
       })),
   };
 }
@@ -93,6 +105,22 @@ export function SkillsEditor({ data, onChange }: SkillsEditorProps) {
             placeholder="Descrizione (opzionale)"
             {...register(`skills.${index}.description`)}
           />
+          <Input
+            placeholder="Icona Lucide (opzionale, es. Video, BookOpen, Mic)"
+            {...register(`skills.${index}.icon`)}
+          />
+          <Input
+            placeholder="Icona immagine URL (opzionale, es. /uploads/icona.png)"
+            {...register(`skills.${index}.imageIcon`)}
+          />
+          <Input
+            placeholder="Foto grande URL (opzionale, es. /uploads/servizio.jpg)"
+            {...register(`skills.${index}.imageUrl`)}
+          />
+          <Input
+            placeholder="Link dettaglio (opzionale, es. https://...)"
+            {...register(`skills.${index}.linkUrl`)}
+          />
         </div>
       ))}
 
@@ -100,7 +128,7 @@ export function SkillsEditor({ data, onChange }: SkillsEditorProps) {
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => append({ name: "", description: "" })}
+        onClick={() => append({ name: "", description: "", icon: "", imageIcon: "", imageUrl: "", linkUrl: "" })}
       >
         <Plus className="h-4 w-4" />
         Aggiungi competenza

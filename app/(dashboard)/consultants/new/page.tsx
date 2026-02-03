@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useTRPC } from "@/lib/trpc";
 import { useMutation } from "@tanstack/react-query";
@@ -12,6 +13,7 @@ import {
 export default function NewConsultantPage() {
   const router = useRouter();
   const trpc = useTRPC();
+  const profileImageRef = useRef<string | null>(null);
 
   const createMutation = useMutation(
     trpc.consultants.create.mutationOptions({
@@ -33,6 +35,7 @@ export default function NewConsultantPage() {
       linkedinUrl: data.linkedinUrl || "",
       facebookUrl: data.facebookUrl || "",
       twitterUrl: data.twitterUrl || "",
+      profileImage: profileImageRef.current || undefined,
     });
   }
 
@@ -48,6 +51,7 @@ export default function NewConsultantPage() {
       </div>
       <ConsultantForm
         onSubmit={handleSubmit}
+        onProfileImageChange={(url) => { profileImageRef.current = url; }}
         isLoading={createMutation.isPending}
       />
     </div>

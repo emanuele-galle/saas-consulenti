@@ -30,25 +30,26 @@ export function ExperiencesSection({
   const title = experiencesData.title ?? "Esperienze professionali";
 
   return (
-    <section className="py-16">
+    <section className="py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="mb-10 text-center text-2xl font-bold text-foreground sm:text-3xl">
+        <p className="mb-4 text-center text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          Percorso
+        </p>
+        <h2 className="mb-16 text-center text-3xl font-bold text-foreground sm:text-4xl">
           {title}
         </h2>
 
         <div className="mx-auto max-w-3xl">
-          <StaggerContainer className="relative border-l-2 border-primary/20 pl-8">
+          <StaggerContainer className="relative border-l-2 border-[var(--theme-color,#C21D17)]/20 pl-8">
             {experiences.map((exp, index) => (
               <StaggerItem
                 key={index}
                 className="relative mb-10 last:mb-0"
               >
-                {/* Timeline Dot */}
-                <div className="absolute -left-[calc(2rem+5px)] top-1.5 h-3 w-3 rounded-full border-2 border-primary bg-white" />
+                <div className="absolute -left-[calc(2rem+5px)] top-1.5 h-3 w-3 rounded-full border-2 border-[var(--theme-color,#C21D17)] bg-white" />
 
-                {/* Content */}
                 <div>
-                  <p className="mb-1 text-xs font-medium uppercase tracking-wide text-primary">
+                  <p className="mb-1 text-xs font-medium uppercase tracking-wider text-[var(--theme-color,#C21D17)]">
                     {exp.period}
                   </p>
                   <h3 className="text-lg font-semibold text-foreground">

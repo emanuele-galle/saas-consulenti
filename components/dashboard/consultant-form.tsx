@@ -32,6 +32,7 @@ const consultantFormSchema = z.object({
   role: z.string().min(1, "Ruolo obbligatorio"),
   network: z.string().optional(),
   bio: z.string().optional(),
+  themeColor: z.string().optional(),
   consultantEmail: z.string().email("Email non valida"),
   phone: z.string().optional(),
   mobile: z.string().optional(),
@@ -45,6 +46,10 @@ const consultantFormSchema = z.object({
   linkedinUrl: z.string().optional(),
   facebookUrl: z.string().optional(),
   twitterUrl: z.string().optional(),
+  instagramUrl: z.string().optional(),
+  tiktokUrl: z.string().optional(),
+  youtubeUrl: z.string().optional(),
+  websiteUrl: z.string().optional(),
 });
 
 export type ConsultantFormData = z.infer<typeof consultantFormSchema>;
@@ -96,6 +101,9 @@ export function ConsultantForm({
     try {
       const formData = new FormData();
       formData.append("file", file);
+      if (previewUrl) {
+        formData.append("replaceUrl", previewUrl);
+      }
 
       const res = await fetch("/api/upload", {
         method: "POST",
@@ -122,57 +130,55 @@ export function ConsultantForm({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Foto Profilo */}
-      {isEdit && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Foto profilo</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-center gap-6">
-              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-muted">
-                {previewUrl ? (
-                  <Image
-                    src={previewUrl}
-                    alt="Foto profilo"
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center">
-                    <Camera className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                )}
-              </div>
-              <div>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handlePhotoUpload}
+      <Card>
+        <CardHeader>
+          <CardTitle>Foto profilo</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-center gap-6">
+            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-muted">
+              {previewUrl ? (
+                <Image
+                  src={previewUrl}
+                  alt="Foto profilo"
+                  fill
+                  className="object-cover"
                 />
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={uploading}
-                >
-                  {uploading ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : (
-                    <Camera className="mr-2 h-4 w-4" />
-                  )}
-                  {uploading ? "Caricamento..." : "Cambia foto"}
-                </Button>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  JPG, PNG o WebP. Max 5MB.
-                </p>
-              </div>
+              ) : (
+                <div className="flex h-full w-full items-center justify-center">
+                  <Camera className="h-8 w-8 text-muted-foreground" />
+                </div>
+              )}
             </div>
-          </CardContent>
-        </Card>
-      )}
+            <div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handlePhotoUpload}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploading}
+              >
+                {uploading ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Camera className="mr-2 h-4 w-4" />
+                )}
+                {uploading ? "Caricamento..." : previewUrl ? "Cambia foto" : "Carica foto"}
+              </Button>
+              <p className="mt-1 text-xs text-muted-foreground">
+                JPG, PNG o WebP. Max 5MB.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Dati Personali */}
       <Card>
@@ -388,6 +394,43 @@ export function ConsultantForm({
         </CardContent>
       </Card>
 
+      {/* Tema Colore */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Tema colore landing page</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-3">
+            <Label>Seleziona colore principale</Label>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { label: "Generali Red", value: "#C21D17" },
+                { label: "Navy Blue", value: "#1B3A5C" },
+                { label: "Forest Green", value: "#2D6A4F" },
+                { label: "Royal Purple", value: "#6B21A8" },
+                { label: "Gold", value: "#B8860B" },
+              ].map((color) => (
+                <button
+                  key={color.value}
+                  type="button"
+                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 transition-all ${
+                    (watch("themeColor") || "#C21D17") === color.value
+                      ? "border-gray-900 ring-2 ring-gray-400 ring-offset-2"
+                      : "border-transparent"
+                  }`}
+                  style={{ backgroundColor: color.value }}
+                  onClick={() => setValue("themeColor", color.value)}
+                  title={color.label}
+                />
+              ))}
+            </div>
+            <p className="text-xs text-muted-foreground">
+              Il colore selezionato viene applicato alla landing page del consulente.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Bio e Social */}
       <Card>
         <CardHeader>
@@ -422,6 +465,38 @@ export function ConsultantForm({
               <Input
                 {...register("twitterUrl")}
                 placeholder="https://x.com/..."
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label>Instagram</Label>
+              <Input
+                {...register("instagramUrl")}
+                placeholder="https://instagram.com/..."
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>TikTok</Label>
+              <Input
+                {...register("tiktokUrl")}
+                placeholder="https://tiktok.com/@..."
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label>YouTube</Label>
+              <Input
+                {...register("youtubeUrl")}
+                placeholder="https://youtube.com/@..."
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Sito web</Label>
+              <Input
+                {...register("websiteUrl")}
+                placeholder="https://www.miosito.it"
               />
             </div>
           </div>

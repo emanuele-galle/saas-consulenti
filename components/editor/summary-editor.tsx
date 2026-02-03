@@ -11,11 +11,15 @@ import { Plus, Trash2 } from "lucide-react";
 interface SummaryData {
   bio?: string;
   highlights?: string[];
+  quote?: string;
+  imageUrl?: string;
 }
 
 interface SummaryFormValues {
   bio: string;
   highlights: Array<{ value: string }>;
+  quote: string;
+  imageUrl: string;
 }
 
 interface SummaryEditorProps {
@@ -27,6 +31,8 @@ function toFormValues(data: SummaryData): SummaryFormValues {
   return {
     bio: data.bio ?? "",
     highlights: (data.highlights ?? []).map((h) => ({ value: h })),
+    quote: data.quote ?? "",
+    imageUrl: data.imageUrl ?? "",
   };
 }
 
@@ -36,6 +42,8 @@ function toSummaryData(values: SummaryFormValues): SummaryData {
     highlights: values.highlights
       .map((h) => h.value)
       .filter((v) => v.trim() !== ""),
+    quote: values.quote || undefined,
+    imageUrl: values.imageUrl || undefined,
   };
 }
 
@@ -66,6 +74,33 @@ export function SummaryEditor({ data, onChange }: SummaryEditorProps) {
           rows={5}
           {...register("bio")}
         />
+        <p className="text-xs text-muted-foreground">
+          Usa &quot;Invio&quot; per separare i paragrafi.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="summary-image">Immagine laterale (opzionale)</Label>
+        <Input
+          id="summary-image"
+          placeholder="URL immagine (es. /uploads/foto.jpg)"
+          {...register("imageUrl")}
+        />
+        <p className="text-xs text-muted-foreground">
+          Se presente, viene mostrata affiancata al testo.
+        </p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="summary-quote">Citazione / Motto (opzionale)</Label>
+        <Input
+          id="summary-quote"
+          placeholder="Es. Il futuro si costruisce oggi"
+          {...register("quote")}
+        />
+        <p className="text-xs text-muted-foreground">
+          Viene mostrata con uno stile speciale sotto la bio.
+        </p>
       </div>
 
       <div className="space-y-3">
