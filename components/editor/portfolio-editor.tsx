@@ -46,10 +46,12 @@ export function PortfolioEditor({ data, onChange }: PortfolioEditorProps) {
   const [items, setItems] = useState<PortfolioItem[]>(data.items ?? []);
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const fileInputRefs = useRef<Map<number, HTMLInputElement>>(new Map());
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
   useEffect(() => {
-    onChange({ items });
-  }, [items, onChange]);
+    onChangeRef.current({ items });
+  }, [items]);
 
   function addItem() {
     setItems((prev) => [

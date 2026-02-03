@@ -32,10 +32,12 @@ export function TestimonialsEditor({ data, onChange }: TestimonialsEditorProps) 
   );
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
   const fileInputRefs = useRef<Map<number, HTMLInputElement>>(new Map());
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
 
   useEffect(() => {
-    onChange({ testimonials });
-  }, [testimonials, onChange]);
+    onChangeRef.current({ testimonials });
+  }, [testimonials]);
 
   function addTestimonial() {
     setTestimonials((prev) => [

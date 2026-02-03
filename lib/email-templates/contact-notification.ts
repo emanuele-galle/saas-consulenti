@@ -1,3 +1,12 @@
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 interface ContactNotificationData {
   consultantName: string;
   firstName: string;
@@ -9,6 +18,15 @@ interface ContactNotificationData {
 }
 
 export function contactNotificationTemplate(data: ContactNotificationData): string {
+  const safe = {
+    consultantName: escapeHtml(data.consultantName),
+    firstName: escapeHtml(data.firstName),
+    lastName: escapeHtml(data.lastName),
+    email: escapeHtml(data.email),
+    phone: data.phone ? escapeHtml(data.phone) : null,
+    message: data.message ? escapeHtml(data.message) : null,
+  };
+
   return `
 <!DOCTYPE html>
 <html>
@@ -31,7 +49,7 @@ export function contactNotificationTemplate(data: ContactNotificationData): stri
           <tr>
             <td style="padding:32px;">
               <p style="margin:0 0 16px;color:#333;font-size:15px;">
-                Ciao <strong>${data.consultantName}</strong>,
+                Ciao <strong>${safe.consultantName}</strong>,
               </p>
               <p style="margin:0 0 24px;color:#333;font-size:15px;">
                 Hai ricevuto una nuova richiesta di contatto dalla tua landing page.
@@ -40,28 +58,28 @@ export function contactNotificationTemplate(data: ContactNotificationData): stri
                 <tr>
                   <td style="padding:8px 16px;">
                     <p style="margin:0;color:#666;font-size:13px;">Nome</p>
-                    <p style="margin:2px 0 0;color:#333;font-size:15px;font-weight:bold;">${data.firstName} ${data.lastName}</p>
+                    <p style="margin:2px 0 0;color:#333;font-size:15px;font-weight:bold;">${safe.firstName} ${safe.lastName}</p>
                   </td>
                 </tr>
                 <tr>
                   <td style="padding:8px 16px;">
                     <p style="margin:0;color:#666;font-size:13px;">Email</p>
-                    <p style="margin:2px 0 0;color:#333;font-size:15px;"><a href="mailto:${data.email}" style="color:#C21D17;">${data.email}</a></p>
+                    <p style="margin:2px 0 0;color:#333;font-size:15px;"><a href="mailto:${safe.email}" style="color:#C21D17;">${safe.email}</a></p>
                   </td>
                 </tr>
-                ${data.phone ? `
+                ${safe.phone ? `
                 <tr>
                   <td style="padding:8px 16px;">
                     <p style="margin:0;color:#666;font-size:13px;">Telefono</p>
-                    <p style="margin:2px 0 0;color:#333;font-size:15px;"><a href="tel:${data.phone}" style="color:#C21D17;">${data.phone}</a></p>
+                    <p style="margin:2px 0 0;color:#333;font-size:15px;"><a href="tel:${safe.phone}" style="color:#C21D17;">${safe.phone}</a></p>
                   </td>
                 </tr>
                 ` : ""}
-                ${data.message ? `
+                ${safe.message ? `
                 <tr>
                   <td style="padding:8px 16px;">
                     <p style="margin:0;color:#666;font-size:13px;">Messaggio</p>
-                    <p style="margin:2px 0 0;color:#333;font-size:15px;">${data.message}</p>
+                    <p style="margin:2px 0 0;color:#333;font-size:15px;">${safe.message}</p>
                   </td>
                 </tr>
                 ` : ""}
