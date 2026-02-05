@@ -1,4 +1,4 @@
-import { Linkedin, Facebook, Twitter, Instagram, Youtube, Globe, Mail, Phone, MapPin } from "lucide-react";
+import { Linkedin, Facebook, Twitter, Instagram, Youtube, Globe, Mail, Phone, MapPin, ArrowUp } from "lucide-react";
 
 interface FooterProps {
   consultantName?: string;
@@ -185,9 +185,18 @@ export function LandingFooter({
             ))}
           </nav>
 
-          <p className="text-sm text-gray-600">
-            &copy; {new Date().getFullYear()} Generali Italia S.p.A.
-          </p>
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-gray-600">
+              &copy; {new Date().getFullYear()} Generali Italia S.p.A.
+            </p>
+            <a
+              href="#"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-gray-500 transition-colors hover:border-[var(--theme-color,#C21D17)] hover:text-[var(--theme-color,#C21D17)]"
+              aria-label="Torna in cima"
+            >
+              <ArrowUp className="h-4 w-4" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

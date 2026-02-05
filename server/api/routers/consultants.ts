@@ -11,6 +11,7 @@ import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
 import { slugify } from "@/lib/utils";
 import { UPLOAD_DIR } from "@/lib/upload";
+import { trackView } from "@/lib/track-view";
 
 export const consultantsRouter = createTRPCRouter({
   // List all consultants (admin only)
@@ -325,13 +326,7 @@ export const consultantsRouter = createTRPCRouter({
       }
 
       // Increment view count
-      await ctx.db.landingPage.update({
-        where: { id: landingPage.id },
-        data: {
-          views: { increment: 1 },
-          lastViewedAt: new Date(),
-        },
-      });
+      trackView(ctx.db, landingPage.id);
 
       return landingPage;
     }),

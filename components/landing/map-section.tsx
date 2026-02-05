@@ -1,5 +1,8 @@
+"use client";
+
 import { MapPin, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { BlurText } from "@/components/ui/blur-text";
 
 interface MapData {
   latitude: number;
@@ -27,17 +30,21 @@ export function MapSection({ mapData }: MapSectionProps) {
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${mapData.latitude},${mapData.longitude}`;
 
   return (
-    <section className="bg-[#0f0f0f] py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-4 text-center text-sm font-medium uppercase tracking-[0.2em]" style={{ color: "var(--generali-gold, #D4A537)" }}>
+    <section className="noise-overlay relative overflow-hidden py-24 sm:py-32">
+      <div className="absolute inset-0 bg-[#0b0b0b]" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p
+          className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.3em]"
+          style={{ color: "var(--generali-gold, #D4A537)" }}
+        >
           Dove trovarmi
         </p>
-        <h2 className="mb-12 text-center text-3xl font-bold text-white sm:text-4xl">
-          La mia sede
+        <h2 className="mb-14 text-center text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+          <BlurText text="La mia sede" delay={80} />
         </h2>
 
-        <div className="overflow-hidden rounded-2xl border border-white/10">
-          {/* Map Embed */}
+        <div className="overflow-hidden rounded-2xl border border-white/[0.08] shadow-2xl shadow-black/40">
           <div className="relative h-[500px] w-full">
             <iframe
               src={embedUrl}
@@ -51,14 +58,21 @@ export function MapSection({ mapData }: MapSectionProps) {
             />
           </div>
 
-          {/* Address Bar */}
           {mapData.address && (
-            <div className="flex flex-col items-start justify-between gap-4 bg-[#1a1a1a] p-5 sm:flex-row sm:items-center">
+            <div className="glass-heavy flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--theme-color,#C21D17)]/10">
+                <div
+                  className="flex h-10 w-10 items-center justify-center rounded-full"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(194,29,23,0.15), rgba(212,165,55,0.1))",
+                  }}
+                >
                   <MapPin className="h-5 w-5 shrink-0 text-[var(--theme-color,#C21D17)]" />
                 </div>
-                <p className="text-sm font-medium text-white">{mapData.address}</p>
+                <p className="text-sm font-medium text-white/90">
+                  {mapData.address}
+                </p>
               </div>
               <Button
                 variant="outline"

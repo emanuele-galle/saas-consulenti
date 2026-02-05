@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { CustomVideoPlayer } from "@/components/landing/video-player";
+import { BlurText } from "@/components/ui/blur-text";
 
 interface VideoItem {
   id: string;
@@ -61,6 +62,33 @@ function normalizeVideos(data: VideoData): VideoItem[] {
   }
 
   return items;
+}
+
+/* ── Section Header ──────────────────────────────────────── */
+
+function VideoSectionHeader({ videoData }: { videoData: VideoData }) {
+  return (
+    <>
+      {videoData.title && (
+        <p
+          className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.3em]"
+          style={{ color: "var(--generali-gold, #D4A537)" }}
+        >
+          Video
+        </p>
+      )}
+      {videoData.title && (
+        <h2 className="mb-4 text-center text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+          <BlurText text={videoData.title} delay={60} />
+        </h2>
+      )}
+      {videoData.description && (
+        <p className="mx-auto mb-14 max-w-2xl text-center text-white/50">
+          {videoData.description}
+        </p>
+      )}
+    </>
+  );
 }
 
 /* ── Video Grid Card (16:9 thumbnail + title) ────────────── */
@@ -260,27 +288,16 @@ export function VideoSection({ videoData }: VideoSectionProps) {
 
   if (videos.length === 0) return null;
 
+  const sectionClass = "noise-overlay relative overflow-hidden py-24 sm:py-32";
+
   // Single video: inline 16:9 player
   if (videos.length === 1) {
     return (
-      <section className="bg-[#0a0a0a] py-20 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          {videoData.title && (
-            <p className="mb-4 text-center text-sm font-medium uppercase tracking-[0.2em] text-[var(--generali-gold,#D4A537)]">
-              Video
-            </p>
-          )}
-          {videoData.title && (
-            <h2 className="mb-4 text-center text-3xl font-bold text-white sm:text-4xl">
-              {videoData.title}
-            </h2>
-          )}
-          {videoData.description && (
-            <p className="mx-auto mb-10 max-w-2xl text-center text-white/60">
-              {videoData.description}
-            </p>
-          )}
-          <div className="shadow-2xl shadow-black/50 ring-1 ring-white/10 rounded-2xl overflow-hidden">
+      <section className={sectionClass}>
+        <div className="absolute inset-0 bg-[#0a0a0a]" />
+        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <VideoSectionHeader videoData={videoData} />
+          <div className="shadow-2xl shadow-black/50 ring-1 ring-white/[0.08] rounded-2xl overflow-hidden">
             <CustomVideoPlayer videoUrl={videos[0].url} aspectRatio="16:9" />
           </div>
         </div>
@@ -291,24 +308,10 @@ export function VideoSection({ videoData }: VideoSectionProps) {
   // 2 videos: side by side grid
   if (videos.length === 2) {
     return (
-      <section className="bg-[#0a0a0a] py-20 sm:py-24">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          {videoData.title && (
-            <p className="mb-4 text-center text-sm font-medium uppercase tracking-[0.2em] text-[var(--generali-gold,#D4A537)]">
-              Video
-            </p>
-          )}
-          {videoData.title && (
-            <h2 className="mb-4 text-center text-3xl font-bold text-white sm:text-4xl">
-              {videoData.title}
-            </h2>
-          )}
-          {videoData.description && (
-            <p className="mx-auto mb-12 max-w-2xl text-center text-white/60">
-              {videoData.description}
-            </p>
-          )}
-
+      <section className={sectionClass}>
+        <div className="absolute inset-0 bg-[#0a0a0a]" />
+        <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <VideoSectionHeader videoData={videoData} />
           <div className="grid gap-6 sm:grid-cols-2">
             {videos.map((video, i) => (
               <VideoGridCard
@@ -338,25 +341,11 @@ export function VideoSection({ videoData }: VideoSectionProps) {
   const [featured, ...rest] = videos;
 
   return (
-    <section className="bg-[#0a0a0a] py-20 sm:py-24">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        {videoData.title && (
-          <p className="mb-4 text-center text-sm font-medium uppercase tracking-[0.2em] text-[var(--generali-gold,#D4A537)]">
-            Video
-          </p>
-        )}
-        {videoData.title && (
-          <h2 className="mb-4 text-center text-3xl font-bold text-white sm:text-4xl">
-            {videoData.title}
-          </h2>
-        )}
-        {videoData.description && (
-          <p className="mx-auto mb-12 max-w-2xl text-center text-white/60">
-            {videoData.description}
-          </p>
-        )}
+    <section className={sectionClass}>
+      <div className="absolute inset-0 bg-[#0a0a0a]" />
+      <div className="relative z-10 mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <VideoSectionHeader videoData={videoData} />
 
-        {/* Featured video */}
         <div className="mb-6">
           <VideoGridCard
             video={featured}
@@ -366,7 +355,6 @@ export function VideoSection({ videoData }: VideoSectionProps) {
           />
         </div>
 
-        {/* Remaining videos grid */}
         <div className="grid gap-6 sm:grid-cols-2">
           {rest.map((video, i) => (
             <VideoGridCard

@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useSidebar } from "@/components/dashboard/sidebar-context";
 import {
   Users,
+  UserPlus,
   LayoutDashboard,
   Globe,
   Mail,
@@ -16,6 +17,7 @@ import {
   User,
   UserCircle,
   ExternalLink,
+  BarChart3,
   X,
   PanelLeftClose,
   PanelLeftOpen,
@@ -24,8 +26,10 @@ import {
 const adminNavItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/consultants", label: "Consulenti", icon: Users },
+  { href: "/invitations", label: "Inviti", icon: UserPlus },
   { href: "/domains", label: "Domini", icon: Globe },
   { href: "/submissions", label: "Richieste", icon: Mail },
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/media", label: "Media", icon: Image },
   { href: "/settings", label: "Impostazioni", icon: Settings },
 ];

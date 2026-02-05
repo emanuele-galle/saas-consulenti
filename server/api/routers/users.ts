@@ -2,7 +2,7 @@ import { z } from "zod";
 import { randomBytes } from "crypto";
 import bcrypt from "bcryptjs";
 import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
+import { createTRPCRouter, adminProcedure, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { sendEmail } from "@/lib/email";
 
 function resetPasswordEmailTemplate(resetUrl: string): string {
@@ -57,6 +57,43 @@ function resetPasswordEmailTemplate(resetUrl: string): string {
 }
 
 export const usersRouter = createTRPCRouter({
+  // Update user role (admin only)
+  updateRole: adminProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        role: z.enum(["ADMIN", "CONSULTANT"]),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (input.userId === ctx.user.id) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Non puoi modificare il tuo stesso ruolo",
+        });
+      }
+
+      const user = await ctx.db.user.findUnique({
+        where: { id: input.userId },
+      });
+
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND", message: "Utente non trovato" });
+      }
+
+      if (user.role === "SUPERADMIN") {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Non puoi modificare il ruolo di un Super Admin",
+        });
+      }
+
+      return ctx.db.user.update({
+        where: { id: input.userId },
+        data: { role: input.role },
+      });
+    }),
+
   changePassword: protectedProcedure
     .input(
       z.object({

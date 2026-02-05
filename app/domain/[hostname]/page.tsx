@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { db } from "@/server/db";
+import { trackView } from "@/lib/track-view";
 import { LandingLayout } from "@/components/landing/landing-layout";
 
 interface PageProps {
@@ -60,6 +61,9 @@ export async function generateMetadata({
           }
         : {}),
     },
+    ...(landingPage.gscVerificationTag
+      ? { verification: { google: landingPage.gscVerificationTag } }
+      : {}),
   };
 }
 
@@ -72,15 +76,7 @@ export default async function DomainLandingPage({ params }: PageProps) {
   }
 
   // Increment view count
-  db.landingPage
-    .update({
-      where: { id: landingPage.id },
-      data: {
-        views: { increment: 1 },
-        lastViewedAt: new Date(),
-      },
-    })
-    .catch(() => {});
+  trackView(db, landingPage.id);
 
   return (
     <LandingLayout

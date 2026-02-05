@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Send, Loader2, Mail, Phone } from "lucide-react";
+import { BlurText } from "@/components/ui/blur-text";
 
 const contactSchema = z.object({
   firstName: z.string().min(1, "Il nome è obbligatorio"),
@@ -109,13 +110,24 @@ export function ContactForm({
   const hasContactInfo = consultantEmail || consultantPhone || consultantImage;
 
   return (
-    <section id="contatti" className="bg-[#111111] py-20 sm:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="mb-4 text-center text-sm font-medium uppercase tracking-[0.2em] text-white/40">
+    <section id="contatti" className="noise-overlay relative overflow-hidden py-24 sm:py-32">
+      <div className="absolute inset-0 bg-[#0c0c0c]" />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          background:
+            "radial-gradient(ellipse 60% 40% at 50% 100%, var(--theme-color, #c21d17), transparent)",
+        }}
+      />
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p
+          className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.3em]"
+          style={{ color: "var(--generali-gold, #D4A537)" }}
+        >
           Contatti
         </p>
-        <h2 className="mb-16 text-center text-3xl font-bold text-white sm:text-4xl">
-          Richiedi un appuntamento
+        <h2 className="mb-20 text-center text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
+          <BlurText text="Richiedi un appuntamento" delay={50} />
         </h2>
 
         <div className={`mx-auto ${hasContactInfo ? "max-w-5xl" : "max-w-2xl"}`}>
@@ -124,7 +136,7 @@ export function ContactForm({
             {hasContactInfo && (
               <div className="flex flex-col items-center text-center lg:w-2/5 lg:items-start lg:text-left lg:pt-4">
                 {consultantImage && (
-                  <div className="relative mb-6 h-20 w-20 overflow-hidden rounded-full ring-2 ring-[var(--theme-color,#C21D17)] ring-offset-2 ring-offset-[#111111]">
+                  <div className="relative mb-6 h-20 w-20 overflow-hidden rounded-full ring-2 ring-[var(--theme-color,#C21D17)] ring-offset-2 ring-offset-[#0c0c0c]">
                     <Image
                       src={consultantImage}
                       alt={consultantName}
@@ -171,7 +183,7 @@ export function ContactForm({
 
             {/* Right Column - Form */}
             <div className={hasContactInfo ? "lg:w-3/5" : "w-full"}>
-              <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-6 sm:p-8">
+              <div className="glass-heavy rounded-2xl p-6 sm:p-8">
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="space-y-5"
@@ -287,7 +299,10 @@ export function ContactForm({
                   {/* Submit */}
                   <Button
                     type="submit"
-                    className="w-full bg-[var(--theme-color,#C21D17)] text-white hover:bg-[var(--theme-color,#C21D17)]/90"
+                    className="w-full text-white font-semibold tracking-wide shadow-lg transition-all hover:shadow-xl"
+                    style={{
+                      background: `linear-gradient(135deg, var(--theme-color, #C21D17), color-mix(in srgb, var(--theme-color, #C21D17) 70%, var(--generali-gold, #D4A537)))`,
+                    }}
                     size="lg"
                     disabled={isSubmitting}
                   >

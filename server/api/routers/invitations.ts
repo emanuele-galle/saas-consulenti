@@ -230,6 +230,85 @@ export const invitationsRouter = createTRPCRouter({
       return result;
     }),
 
+  // Revoke invitation (admin only)
+  revoke: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const invitation = await ctx.db.invitationToken.findUnique({
+        where: { id: input.id },
+      });
+
+      if (!invitation) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invito non trovato",
+        });
+      }
+
+      if (invitation.usedAt) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Questo invito e' gia' stato utilizzato o revocato",
+        });
+      }
+
+      return ctx.db.invitationToken.update({
+        where: { id: input.id },
+        data: { usedAt: new Date() },
+      });
+    }),
+
+  // Resend invitation (admin only)
+  resend: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const invitation = await ctx.db.invitationToken.findUnique({
+        where: { id: input.id },
+      });
+
+      if (!invitation) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invito non trovato",
+        });
+      }
+
+      // Check if a user was actually created with this email (used invite)
+      const userExists = await ctx.db.user.findUnique({
+        where: { email: invitation.email },
+      });
+      if (userExists) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "L'utente si e' gia' registrato con questa email",
+        });
+      }
+
+      const newToken = generateToken();
+
+      const updated = await ctx.db.invitationToken.update({
+        where: { id: input.id },
+        data: {
+          token: newToken,
+          usedAt: null,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        },
+      });
+
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3010";
+      const inviteUrl = `${appUrl}/invite/${newToken}`;
+
+      sendEmail({
+        to: invitation.email,
+        subject: "Invito Piattaforma Landing Page Generali",
+        html: invitationEmailTemplate(invitation.email, inviteUrl),
+      }).catch((err) => {
+        console.error("Failed to send invitation email:", err);
+      });
+
+      return updated;
+    }),
+
   // List invitations (admin only)
   list: adminProcedure
     .input(

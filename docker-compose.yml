@@ -1,0 +1,33 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+    container_name: saas-generali-app
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    networks:
+      - traefik-public
+      - panel-internal
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.routers.saas-generali.rule=Host(`saas-generali.fodivps1.cloud`)"
+      - "traefik.http.routers.saas-generali.entrypoints=websecure"
+      - "traefik.http.routers.saas-generali.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.saas-generali.middlewares=security-headers@file,compress@file"
+      - "traefik.http.services.saas-generali.loadbalancer.server.port=3000"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:3000/ 2>&1 || true"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  traefik-public:
+    external: true
+  panel-internal:
+    external: true

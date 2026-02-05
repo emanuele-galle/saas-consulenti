@@ -115,12 +115,20 @@ model LandingPage {
   // Dominio
   customDomain CustomDomain?
 
+  // SEO & Analytics
+  ga4MeasurementId   String?   @map("ga4_measurement_id")
+  gscVerificationTag String?   @map("gsc_verification_tag")
+  pagespeedMobile    Int?      @map("pagespeed_mobile")
+  pagespeedDesktop   Int?      @map("pagespeed_desktop")
+  pagespeedCheckedAt DateTime? @map("pagespeed_checked_at")
+
   // Analytics
   views        Int       @default(0)
   lastViewedAt DateTime? @map("last_viewed_at")
 
-  // Submissions
+  // Relazioni
   contactSubmissions ContactSubmission[]
+  pageViews          PageView[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -152,10 +160,25 @@ model ContactSubmission {
   phone           String?
   message         String?     @db.Text
   isExistingClient Boolean    @default(false) @map("is_existing_client")
+  isRead          Boolean     @default(false) @map("is_read")
+  readAt          DateTime?   @map("read_at")
   createdAt       DateTime    @default(now()) @map("created_at")
 
   @@index([landingPageId])
   @@map("contact_submissions")
+}
+
+model PageView {
+  id            String      @id @default(cuid())
+  landingPageId String      @map("landing_page_id")
+  landingPage   LandingPage @relation(fields: [landingPageId], references: [id], onDelete: Cascade)
+  date          DateTime    @db.Date
+  views         Int         @default(0)
+
+  @@unique([landingPageId, date])
+  @@index([landingPageId])
+  @@index([date])
+  @@map("page_views")
 }
 
 model Media {

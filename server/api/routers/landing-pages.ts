@@ -101,13 +101,15 @@ export const landingPagesRouter = createTRPCRouter({
       });
     }),
 
-  // Update SEO data
+  // Update SEO & Analytics data
   updateSeo: protectedProcedure
     .input(
       z.object({
         landingPageId: z.string(),
         metaTitle: z.string().optional(),
         metaDescription: z.string().optional(),
+        ga4MeasurementId: z.string().optional(),
+        gscVerificationTag: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

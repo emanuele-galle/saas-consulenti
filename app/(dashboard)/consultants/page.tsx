@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useTRPC } from "@/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -22,12 +22,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Plus, Search, ExternalLink, Edit, Eye } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { Plus, Search, ExternalLink, Edit, Eye, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ConsultantsPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const trpc = useTRPC();
+  const queryClient = useQueryClient();
 
   const { data, isLoading } = useQuery(
     trpc.consultants.list.queryOptions({
@@ -36,6 +49,32 @@ export default function ConsultantsPage() {
       limit: 20,
     })
   );
+
+  const deleteMutation = useMutation(
+    trpc.consultants.delete.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: trpc.consultants.list.queryKey(),
+        });
+        setDeleteId(null);
+        toast.success("Consulente eliminato");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    })
+  );
+
+  function roleBadge(userRole: string) {
+    switch (userRole) {
+      case "SUPERADMIN":
+        return <Badge variant="destructive">Super Admin</Badge>;
+      case "ADMIN":
+        return <Badge variant="default">Admin</Badge>;
+      default:
+        return <Badge variant="secondary">Consulente</Badge>;
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -119,12 +158,14 @@ export default function ConsultantsPage() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        <p className="text-sm">{consultant.role}</p>
-                        {consultant.network && (
-                          <p className="text-xs text-muted-foreground">
-                            {consultant.network}
-                          </p>
-                        )}
+                        <div>
+                          {roleBadge(consultant.user.role)}
+                          {consultant.network && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {consultant.network}
+                            </p>
+                          )}
+                        </div>
                       </TableCell>
                       <TableCell>
                         {consultant.city
@@ -179,6 +220,14 @@ export default function ConsultantsPage() {
                               <Eye className="h-4 w-4" />
                             </Button>
                           </Link>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            title="Elimina"
+                            onClick={() => setDeleteId(consultant.id)}
+                          >
+                            <Trash2 className="h-4 w-4 text-red-500" />
+                          </Button>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -215,6 +264,38 @@ export default function ConsultantsPage() {
           )}
         </CardContent>
       </Card>
+
+      <AlertDialog
+        open={!!deleteId}
+        onOpenChange={(open) => {
+          if (!open) setDeleteId(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Conferma eliminazione</AlertDialogTitle>
+            <AlertDialogDescription>
+              Sei sicuro di voler eliminare questo consulente? Questa azione
+              eliminera anche il suo account utente, la landing page e tutti i
+              dati associati. L&apos;operazione non e reversibile.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Annulla</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => {
+                if (deleteId) {
+                  deleteMutation.mutate({ id: deleteId });
+                }
+              }}
+              disabled={deleteMutation.isPending}
+            >
+              {deleteMutation.isPending ? "Eliminazione..." : "Elimina"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -27,10 +27,10 @@ export function LandingHeader() {
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300",
+        "fixed top-0 z-50 w-full transition-all duration-500",
         scrolled
-          ? "bg-white shadow-md"
-          : "bg-white/95 backdrop-blur-sm"
+          ? "bg-white/95 backdrop-blur-md shadow-md"
+          : "bg-transparent"
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -51,12 +51,30 @@ export function LandingHeader() {
             <a
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              className={cn(
+                "text-sm font-medium transition-colors hover:text-primary",
+                scrolled ? "text-muted-foreground" : "text-white/80 hover:text-white"
+              )}
             >
               {item.label}
             </a>
           ))}
-          <Button asChild size="sm">
+          <Button
+            asChild
+            size="sm"
+            className={cn(
+              "transition-all",
+              !scrolled && "shadow-lg"
+            )}
+            style={
+              !scrolled
+                ? {
+                    background: "var(--theme-color, #c21d17)",
+                    boxShadow: "0 0 20px var(--theme-color, #c21d17)40",
+                  }
+                : undefined
+            }
+          >
             <a href="#contatti">Chiedi appuntamento</a>
           </Button>
         </nav>
@@ -64,7 +82,10 @@ export function LandingHeader() {
         {/* Mobile Menu Toggle */}
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-md p-2 text-foreground md:hidden"
+          className={cn(
+            "inline-flex items-center justify-center rounded-md p-2 md:hidden transition-colors",
+            scrolled ? "text-foreground" : "text-white"
+          )}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           aria-label={mobileMenuOpen ? "Chiudi menu" : "Apri menu"}
         >

@@ -7,6 +7,7 @@ import { useTRPC } from "@/lib/trpc";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { SectionPanel } from "@/components/editor/section-panel";
+import { SeoAnalyticsEditor } from "@/components/editor/seo-analytics-editor";
 import { LivePreview } from "@/components/editor/live-preview";
 import {
   ArrowLeft,
@@ -15,6 +16,8 @@ import {
   Loader2,
   PenSquare,
   Eye,
+  ChevronDown,
+  Search,
 } from "lucide-react";
 
 /**
@@ -92,6 +95,7 @@ export default function EditorPage() {
   const [sectionOverrides, setSectionOverrides] = useState<Record<string, unknown>>({});
   const [previewRefreshKey, setPreviewRefreshKey] = useState(0);
   const [mobileTab, setMobileTab] = useState<"editor" | "preview">("editor");
+  const [seoOpen, setSeoOpen] = useState(false);
 
   // Merge initial data with user overrides
   const sections = useMemo(
@@ -343,16 +347,47 @@ export default function EditorPage() {
           }`}
         >
           {hasData && (
-            <SectionPanel
-              sections={sections}
-              onSectionChange={handleSectionChange}
-              consultantAddress={landingPage.consultant ? {
-                address: landingPage.consultant.address,
-                cap: landingPage.consultant.cap,
-                city: landingPage.consultant.city,
-                province: landingPage.consultant.province,
-              } : undefined}
-            />
+            <>
+              <SectionPanel
+                sections={sections}
+                onSectionChange={handleSectionChange}
+                consultantAddress={landingPage.consultant ? {
+                  address: landingPage.consultant.address,
+                  cap: landingPage.consultant.cap,
+                  city: landingPage.consultant.city,
+                  province: landingPage.consultant.province,
+                } : undefined}
+              />
+
+              {/* SEO & Analytics Collapsible */}
+              <div className="mt-4 overflow-hidden rounded-lg border">
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium hover:bg-muted/50 transition-colors"
+                  onClick={() => setSeoOpen(!seoOpen)}
+                >
+                  <span className="flex items-center gap-2">
+                    <Search className="h-4 w-4" />
+                    SEO & Analytics
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-muted-foreground transition-transform duration-200 ${seoOpen ? "rotate-180" : ""}`}
+                  />
+                </button>
+                {seoOpen && (
+                  <div className="border-t px-4 pb-4 pt-3">
+                    <SeoAnalyticsEditor
+                      landingPageId={params.id}
+                      metaTitle={landingPage.metaTitle}
+                      metaDescription={landingPage.metaDescription}
+                      ga4MeasurementId={landingPage.ga4MeasurementId}
+                      gscVerificationTag={landingPage.gscVerificationTag}
+                      slug={landingPage.slug}
+                    />
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
 
