@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { ImageUploadField } from "@/components/ui/image-upload-field";
 import { Plus, Trash2 } from "lucide-react";
 
 interface Skill {
@@ -123,13 +124,31 @@ export function SkillsEditor({ data, onChange }: SkillsEditorProps) {
             placeholder="Icona Lucide (opzionale, es. Video, BookOpen, Mic)"
             {...register(`skills.${index}.icon`)}
           />
-          <Input
-            placeholder="Icona immagine URL (opzionale, es. /uploads/icona.png)"
-            {...register(`skills.${index}.imageIcon`)}
+          <Controller
+            control={control}
+            name={`skills.${index}.imageIcon`}
+            render={({ field }) => (
+              <ImageUploadField
+                value={field.value}
+                onChange={field.onChange}
+                label="Icona immagine (opzionale)"
+                placeholder="Carica icona"
+                aspect="square"
+              />
+            )}
           />
-          <Input
-            placeholder="Foto grande URL (opzionale, es. /uploads/servizio.jpg)"
-            {...register(`skills.${index}.imageUrl`)}
+          <Controller
+            control={control}
+            name={`skills.${index}.imageUrl`}
+            render={({ field }) => (
+              <ImageUploadField
+                value={field.value}
+                onChange={field.onChange}
+                label="Foto servizio (opzionale)"
+                placeholder="Carica immagine servizio"
+                aspect="wide"
+              />
+            )}
           />
           <Input
             placeholder="Link dettaglio (opzionale, es. https://...)"
