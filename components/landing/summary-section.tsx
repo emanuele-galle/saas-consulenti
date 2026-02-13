@@ -36,7 +36,7 @@ export function SummarySection({ summaryData, consultant }: SummarySectionProps)
     : null;
 
   return (
-    <section id="chi-sono" className="section-premium py-24 lg:py-32">
+    <section id="chi-sono" className="section-premium py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
           className={`flex flex-col gap-14 ${

@@ -58,7 +58,7 @@ export function BannerSection({ bannerData }: BannerSectionProps) {
   );
 
   return (
-    <section className="section-warm py-24 lg:py-32">
+    <section className="section-warm py-8 lg:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {linkUrl ? (
           <a

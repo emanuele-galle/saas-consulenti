@@ -198,7 +198,7 @@ export function SkillsSection({ skillsData }: SkillsSectionProps) {
   const title = skillsData.title ?? "Competenze professionali";
 
   return (
-    <section id="servizi" className="section-premium py-24 lg:py-32">
+    <section id="servizi" className="section-premium py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em]"
@@ -206,7 +206,7 @@ export function SkillsSection({ skillsData }: SkillsSectionProps) {
         >
           Servizi
         </p>
-        <h2 className="font-display mb-20 text-center text-[clamp(2rem,4vw,3.25rem)] tracking-[-0.01em] text-[#1A1A1A]">
+        <h2 className="font-display mb-12 text-center text-[clamp(2rem,4vw,3.25rem)] tracking-[-0.01em] text-[#1A1A1A]">
           {title}
         </h2>
 

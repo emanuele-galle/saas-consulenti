@@ -80,7 +80,7 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
   if (entries.length === 0) return null;
 
   return (
-    <section className="section-premium py-24 lg:py-32">
+    <section className="section-premium py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Kicker */}
         <p
@@ -96,7 +96,7 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
         </h2>
 
         {/* Accent line */}
-        <div className="accent-line mx-auto mb-16" />
+        <div className="accent-line mx-auto mb-10" />
 
         {/* Timeline */}
         <div className="mx-auto max-w-3xl">

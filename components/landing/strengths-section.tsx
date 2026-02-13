@@ -38,7 +38,7 @@ export function StrengthsSection({ strengthsData }: StrengthsSectionProps) {
   return (
     <section
       id="punti-forza"
-      className="section-warm py-24 lg:py-32"
+      className="section-warm py-12 lg:py-16"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Kicker */}
@@ -58,12 +58,12 @@ export function StrengthsSection({ strengthsData }: StrengthsSectionProps) {
         <div className="accent-line mx-auto mb-6" />
 
         {strengthsData.subtitle && (
-          <p className="mx-auto mb-16 max-w-2xl text-center text-lg leading-relaxed text-[#6B7280]">
+          <p className="mx-auto mb-10 max-w-2xl text-center text-lg leading-relaxed text-[#6B7280]">
             {strengthsData.subtitle}
           </p>
         )}
 
-        {!strengthsData.subtitle && <div className="mb-16" />}
+        {!strengthsData.subtitle && <div className="mb-10" />}
 
         {/* Cards grid */}
         <StaggerContainer

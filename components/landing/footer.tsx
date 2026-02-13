@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Linkedin, Facebook, Twitter, Instagram, Youtube, Globe, ArrowUp } from "lucide-react";
 
 interface FooterProps {
@@ -59,15 +58,8 @@ export function LandingFooter({
         <div className="grid gap-12 md:grid-cols-3">
           {/* Col 1: Logo + Name */}
           <div>
-            <Image
-              src="/images/generali-logo.svg"
-              alt="Generali"
-              width={110}
-              height={36}
-              className="mb-5 brightness-0 invert opacity-50"
-            />
             {consultantName && (
-              <p className="font-display text-lg text-white/80">{consultantName}</p>
+              <p className="mb-5 font-display text-xl font-bold text-white/80">{consultantName}</p>
             )}
             {consultantRole && (
               <p className="mt-1 text-sm text-white/40">{consultantRole}</p>

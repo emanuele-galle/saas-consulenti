@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +13,7 @@ const NAV_ITEMS = [
 
 interface LandingHeaderProps {
   consultant?: {
+    title?: string | null;
     firstName: string;
     lastName: string;
   };
@@ -52,17 +52,18 @@ export function LandingHeader({ consultant }: LandingHeaderProps = {}) {
       >
         <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <a href="#" className="flex items-center">
-            <Image
-              src="/images/generali-logo.svg"
-              alt="Generali"
-              width={120}
-              height={40}
-              priority
+            <span
               className={cn(
-                "transition-all duration-500",
-                !scrolled && "brightness-0 invert"
+                "font-display text-lg font-bold tracking-tight transition-all duration-500",
+                scrolled ? "text-[#1A1A1A]" : "text-white"
               )}
-            />
+            >
+              {consultant
+                ? [consultant.title, consultant.firstName, consultant.lastName]
+                    .filter(Boolean)
+                    .join(" ")
+                : "Consulente"}
+            </span>
           </a>
 
           <nav className="hidden items-center gap-8 md:flex">

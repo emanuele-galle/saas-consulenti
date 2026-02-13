@@ -66,7 +66,7 @@ function normalizeVideos(data: VideoData): VideoItem[] {
 
 function SectionHeader({ title, description }: { title?: string; description?: string }) {
   return (
-    <div className="mb-16 text-center">
+    <div className="mb-10 text-center">
       <p
         className="mb-4 text-sm font-medium uppercase tracking-[0.2em]"
         style={{ color: "var(--generali-gold, #D4A537)" }}
@@ -345,7 +345,7 @@ export function VideoSection({ videoData }: VideoSectionProps) {
   // Single video: inline player
   if (videos.length === 1) {
     return (
-      <section className="section-premium py-24 lg:py-32">
+      <section className="section-premium py-12 lg:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <SectionHeader title={videoData.title} description={videoData.description} />
           <div
@@ -362,7 +362,7 @@ export function VideoSection({ videoData }: VideoSectionProps) {
   // 2 videos: side by side
   if (videos.length === 2) {
     return (
-      <section className="section-premium py-24 lg:py-32">
+      <section className="section-premium py-12 lg:py-16">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <SectionHeader title={videoData.title} description={videoData.description} />
           <div className="grid gap-8 sm:grid-cols-2">
@@ -384,7 +384,7 @@ export function VideoSection({ videoData }: VideoSectionProps) {
   const [featured, ...rest] = videos;
 
   return (
-    <section className="section-premium py-24 lg:py-32">
+    <section className="section-premium py-12 lg:py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <SectionHeader title={videoData.title} description={videoData.description} />
 

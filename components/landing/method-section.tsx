@@ -35,7 +35,7 @@ export function MethodSection({ methodData }: MethodSectionProps) {
   const title = methodData.title ?? "Il Mio Metodo";
 
   return (
-    <section id="metodo" className="section-premium py-24 lg:py-32">
+    <section id="metodo" className="section-premium py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em]"
@@ -47,7 +47,7 @@ export function MethodSection({ methodData }: MethodSectionProps) {
           {title}
         </h2>
         {methodData.subtitle && (
-          <p className="mx-auto mb-20 max-w-2xl text-center text-lg leading-relaxed text-[#6B7280]">
+          <p className="mx-auto mb-12 max-w-2xl text-center text-lg leading-relaxed text-[#6B7280]">
             {methodData.subtitle}
           </p>
         )}

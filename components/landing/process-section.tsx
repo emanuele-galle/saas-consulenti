@@ -23,7 +23,7 @@ export function ProcessSection({ processData }: ProcessSectionProps) {
   const title = processData.title ?? "Come Lavoriamo Insieme";
 
   return (
-    <section id="processo" className="section-dark py-24 lg:py-32">
+    <section id="processo" className="section-dark py-12 lg:py-16">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <p
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em]"
@@ -35,7 +35,7 @@ export function ProcessSection({ processData }: ProcessSectionProps) {
           {title}
         </h2>
         {processData.subtitle && (
-          <p className="mx-auto mb-20 max-w-2xl text-center text-lg leading-relaxed text-white/60">
+          <p className="mx-auto mb-12 max-w-2xl text-center text-lg leading-relaxed text-white/60">
             {processData.subtitle}
           </p>
         )}

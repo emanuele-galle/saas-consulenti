@@ -39,7 +39,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
 
   if (style === "left-accent") {
     return (
-      <section className="section-light py-24 lg:py-32">
+      <section className="section-light py-12 lg:py-16">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -83,7 +83,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
   }
 
   return (
-    <section className="noise-overlay relative overflow-hidden py-24 lg:py-32">
+    <section className="noise-overlay relative overflow-hidden py-12 lg:py-16">
       {/* Sophisticated layered gradient background */}
       <div
         className="absolute inset-0"

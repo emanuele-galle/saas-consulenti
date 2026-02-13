@@ -130,7 +130,7 @@ export function ContactForm({
   return (
     <section
       id="contatti"
-      className="relative py-24 md:py-32 lg:py-40 overflow-hidden"
+      className="relative py-16 md:py-20 lg:py-24 overflow-hidden"
       style={{
         background: "linear-gradient(180deg, #0c0c0c 0%, color-mix(in srgb, var(--theme-color) 3%, #080808) 50%, #050505 100%)",
       }}

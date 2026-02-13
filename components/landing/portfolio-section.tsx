@@ -60,9 +60,9 @@ export function PortfolioSection({ portfolioData, focusOnData }: PortfolioSectio
     : allItems.filter((i) => i.category === activeCategory);
 
   return (
-    <section id="portfolio" className="section-warm py-24 lg:py-32">
+    <section id="portfolio" className="section-warm py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
+        <div className="mb-10 text-center">
           <p
             className="mb-4 text-sm font-medium uppercase tracking-[0.2em]"
             style={{ color: "var(--generali-gold, #D4A537)" }}

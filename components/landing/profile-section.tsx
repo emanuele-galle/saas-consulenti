@@ -95,7 +95,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
     consultant.email || consultant.phone || consultant.mobile || address;
 
   return (
-    <section id="profilo" className="section-premium py-24 md:py-32 lg:py-40">
+    <section id="profilo" className="section-premium py-12 md:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section label */}
         <motion.p
@@ -114,7 +114,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-          className="mb-16 text-center font-display text-[clamp(2rem,4vw,3.5rem)] leading-tight tracking-[-0.02em] text-[#1A1A1A]"
+          className="mb-10 text-center font-display text-[clamp(2rem,4vw,3.5rem)] leading-tight tracking-[-0.02em] text-[#1A1A1A]"
         >
           Il Tuo Consulente
         </motion.h2>
@@ -329,7 +329,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
                           </p>
                           <a
                             href={`mailto:${consultant.email}`}
-                            className="text-base font-medium text-[#1A1A1A] transition-colors duration-200 hover:underline"
+                            className="text-sm font-medium text-[#1A1A1A] transition-colors duration-200 hover:underline break-words sm:text-base"
                             style={
                               {
                                 "--hover-color":

@@ -32,7 +32,7 @@ export function MapSection({ mapData }: MapSectionProps) {
   const mapEmbedUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&z=${zoom}&output=embed`;
 
   return (
-    <section id="mappa" className="section-premium py-24 md:py-32 lg:py-40">
+    <section id="mappa" className="section-premium py-12 md:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <AnimateOnScroll variant="fade-up">

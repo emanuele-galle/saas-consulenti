@@ -218,14 +218,7 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
           </AnimateOnScroll>
         )}
 
-        {/* 12. Interests */}
-        {hasInterests && (
-          <AnimateOnScroll variant="fade-up">
-            <InterestsSection
-              interestsData={landingPage.interestsData as unknown as Parameters<typeof InterestsSection>[0]["interestsData"]}
-            />
-          </AnimateOnScroll>
-        )}
+        {/* 12. Interests - disabled by design */}
 
         {/* 13. Banner */}
         {hasBanner && (

@@ -30,7 +30,7 @@ export function EducationSection({ educationData }: EducationSectionProps) {
   const title = educationData.title ?? "Formazione";
 
   return (
-    <section className="section-light py-24 lg:py-32">
+    <section className="section-light py-12 lg:py-16">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Kicker */}
         <p
@@ -46,7 +46,7 @@ export function EducationSection({ educationData }: EducationSectionProps) {
         </h2>
 
         {/* Accent line */}
-        <div className="accent-line mx-auto mb-16" />
+        <div className="accent-line mx-auto mb-10" />
 
         {/* Cards */}
         <StaggerContainer className="mx-auto max-w-3xl space-y-6">
