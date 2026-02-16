@@ -22,7 +22,9 @@ import { PortfolioSection } from "@/components/landing/portfolio-section";
 import { FaqSection } from "@/components/landing/faq-section";
 import { QuoteSection } from "@/components/landing/quote-section";
 import { ContactForm } from "@/components/landing/contact-form";
-import { AnimateOnScroll, ScrollProgress } from "@/components/landing/animate-on-scroll";
+import { AnimateOnScroll, ScrollProgress, ScrollToTop } from "@/components/landing/animate-on-scroll";
+import { SectionBackgroundWrapper } from "@/components/landing/section-background";
+import type { SectionBackground } from "@/components/editor/section-background-editor";
 
 interface LandingLayoutProps {
   consultant: Consultant;
@@ -33,6 +35,16 @@ function isJsonObject(
   value: Prisma.JsonValue | null
 ): value is Prisma.JsonObject {
   return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function extractBackground(data: unknown): SectionBackground | undefined {
+  if (data && typeof data === "object" && !Array.isArray(data)) {
+    const bg = (data as Record<string, unknown>).background;
+    if (bg && typeof bg === "object" && !Array.isArray(bg)) {
+      return bg as SectionBackground;
+    }
+  }
+  return undefined;
 }
 
 export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
@@ -121,6 +133,7 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
           </Script>
         </>
       )}
+      <ScrollToTop />
       <ScrollProgress />
       <LandingHeader consultant={consultant} />
 
@@ -142,143 +155,175 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
 
         {/* 3. Values */}
         {hasValues && (
-          <AnimateOnScroll variant="fade-up">
-            <ValuesSection
-              valuesData={landingPage.valuesData as unknown as Parameters<typeof ValuesSection>[0]["valuesData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.valuesData)}>
+            <AnimateOnScroll variant="fade-up">
+              <ValuesSection
+                valuesData={landingPage.valuesData as unknown as Parameters<typeof ValuesSection>[0]["valuesData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 4. Map */}
         {hasMap && (
-          <MapSection
-            mapData={landingPage.mapData as unknown as Parameters<typeof MapSection>[0]["mapData"]}
-          />
+          <SectionBackgroundWrapper background={extractBackground(landingPage.mapData)}>
+            <MapSection
+              mapData={landingPage.mapData as unknown as Parameters<typeof MapSection>[0]["mapData"]}
+            />
+          </SectionBackgroundWrapper>
         )}
 
         {/* 5. Summary */}
         {hasSummary && (
-          <SummarySection
-            summaryData={landingPage.summaryData as unknown as Parameters<typeof SummarySection>[0]["summaryData"]}
-            consultant={consultant}
-          />
+          <SectionBackgroundWrapper background={extractBackground(landingPage.summaryData)}>
+            <SummarySection
+              summaryData={landingPage.summaryData as unknown as Parameters<typeof SummarySection>[0]["summaryData"]}
+              consultant={consultant}
+            />
+          </SectionBackgroundWrapper>
         )}
 
         {/* 6. Skills */}
         {hasSkills && (
-          <AnimateOnScroll variant="fade-up">
-            <SkillsSection
-              skillsData={landingPage.skillsData as unknown as Parameters<typeof SkillsSection>[0]["skillsData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.skillsData)}>
+            <AnimateOnScroll variant="fade-up">
+              <SkillsSection
+                skillsData={landingPage.skillsData as unknown as Parameters<typeof SkillsSection>[0]["skillsData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 7. Process */}
         {hasProcess && (
-          <AnimateOnScroll variant="fade-up">
-            <ProcessSection
-              processData={landingPage.processData as unknown as Parameters<typeof ProcessSection>[0]["processData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.processData)}>
+            <AnimateOnScroll variant="fade-up">
+              <ProcessSection
+                processData={landingPage.processData as unknown as Parameters<typeof ProcessSection>[0]["processData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 8. Method */}
         {hasMethod && (
-          <AnimateOnScroll variant="fade-up">
-            <MethodSection
-              methodData={landingPage.methodData as unknown as Parameters<typeof MethodSection>[0]["methodData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.methodData)}>
+            <AnimateOnScroll variant="fade-up">
+              <MethodSection
+                methodData={landingPage.methodData as unknown as Parameters<typeof MethodSection>[0]["methodData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 9. Strengths */}
         {hasStrengths && (
-          <AnimateOnScroll variant="fade-up">
-            <StrengthsSection
-              strengthsData={landingPage.strengthsData as unknown as Parameters<typeof StrengthsSection>[0]["strengthsData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.strengthsData)}>
+            <AnimateOnScroll variant="fade-up">
+              <StrengthsSection
+                strengthsData={landingPage.strengthsData as unknown as Parameters<typeof StrengthsSection>[0]["strengthsData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 10. Experiences */}
         {hasExperiences && (
-          <AnimateOnScroll variant="fade-up">
-            <ExperiencesSection
-              experiencesData={landingPage.experiencesData as unknown as Parameters<typeof ExperiencesSection>[0]["experiencesData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.experiencesData)}>
+            <AnimateOnScroll variant="fade-up">
+              <ExperiencesSection
+                experiencesData={landingPage.experiencesData as unknown as Parameters<typeof ExperiencesSection>[0]["experiencesData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 11. Education */}
         {hasEducation && (
-          <AnimateOnScroll variant="fade-up">
-            <EducationSection
-              educationData={landingPage.educationData as unknown as Parameters<typeof EducationSection>[0]["educationData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.educationData)}>
+            <AnimateOnScroll variant="fade-up">
+              <EducationSection
+                educationData={landingPage.educationData as unknown as Parameters<typeof EducationSection>[0]["educationData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 12. Interests - disabled by design */}
 
         {/* 13. Banner */}
         {hasBanner && (
-          <AnimateOnScroll variant="fade-up">
-            <BannerSection
-              bannerData={landingPage.bannerData as unknown as Parameters<typeof BannerSection>[0]["bannerData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.bannerData)}>
+            <AnimateOnScroll variant="fade-up">
+              <BannerSection
+                bannerData={landingPage.bannerData as unknown as Parameters<typeof BannerSection>[0]["bannerData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 14. Focus On */}
         {hasFocusOn && (
-          <AnimateOnScroll variant="fade-up">
-            <FocusOnSection
-              focusOnData={landingPage.focusOnData as unknown as Parameters<typeof FocusOnSection>[0]["focusOnData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.focusOnData)}>
+            <AnimateOnScroll variant="fade-up">
+              <FocusOnSection
+                focusOnData={landingPage.focusOnData as unknown as Parameters<typeof FocusOnSection>[0]["focusOnData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 15. Testimonials */}
         {hasTestimonials && (
-          <AnimateOnScroll variant="fade-up">
-            <TestimonialsSection
-              testimonialsData={landingPage.testimonialsData as unknown as Parameters<typeof TestimonialsSection>[0]["testimonialsData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.testimonialsData)}>
+            <AnimateOnScroll variant="fade-up">
+              <TestimonialsSection
+                testimonialsData={landingPage.testimonialsData as unknown as Parameters<typeof TestimonialsSection>[0]["testimonialsData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 16. Video */}
         {hasVideo && (
-          <AnimateOnScroll variant="fade-up">
-            <VideoSection
-              videoData={landingPage.videoData as unknown as Parameters<typeof VideoSection>[0]["videoData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.videoData)}>
+            <AnimateOnScroll variant="fade-up">
+              <VideoSection
+                videoData={landingPage.videoData as unknown as Parameters<typeof VideoSection>[0]["videoData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 17. Portfolio */}
         {hasPortfolio && (
-          <AnimateOnScroll variant="fade-up">
-            <PortfolioSection
-              portfolioData={landingPage.portfolioData as unknown as Parameters<typeof PortfolioSection>[0]["portfolioData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.portfolioData)}>
+            <AnimateOnScroll variant="fade-up">
+              <PortfolioSection
+                portfolioData={landingPage.portfolioData as unknown as Parameters<typeof PortfolioSection>[0]["portfolioData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 18. FAQ */}
         {hasFaq && (
-          <AnimateOnScroll variant="fade-up">
-            <FaqSection
-              faqData={landingPage.faqData as unknown as Parameters<typeof FaqSection>[0]["faqData"]}
-            />
-          </AnimateOnScroll>
+          <SectionBackgroundWrapper background={extractBackground(landingPage.faqData)}>
+            <AnimateOnScroll variant="fade-up">
+              <FaqSection
+                faqData={landingPage.faqData as unknown as Parameters<typeof FaqSection>[0]["faqData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
         )}
 
         {/* 19. Quote */}
         {hasQuote && (
-          <QuoteSection
-            quoteData={landingPage.quoteData as unknown as Parameters<typeof QuoteSection>[0]["quoteData"]}
-          />
+          <SectionBackgroundWrapper background={extractBackground(landingPage.quoteData)}>
+            <QuoteSection
+              quoteData={landingPage.quoteData as unknown as Parameters<typeof QuoteSection>[0]["quoteData"]}
+            />
+          </SectionBackgroundWrapper>
         )}
 
         {/* Contact (always present) */}

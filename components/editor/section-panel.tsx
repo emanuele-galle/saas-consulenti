@@ -24,6 +24,8 @@ import { ProcessEditor } from "@/components/editor/process-editor";
 import { MethodEditor } from "@/components/editor/method-editor";
 import { StrengthsEditor } from "@/components/editor/strengths-editor";
 import { FaqEditor } from "@/components/editor/faq-editor";
+import { SectionBackgroundEditor } from "@/components/editor/section-background-editor";
+import type { SectionBackground } from "@/components/editor/section-background-editor";
 
 interface ConsultantAddress {
   address?: string | null;
@@ -210,11 +212,11 @@ function isSectionFilled(sectionId: string, data: unknown): boolean {
 
   switch (sectionId) {
     case "cover":
-      return !!(record.imageUrl || record.videoUrl);
+      return !!(record.headline || record.backgroundImage || record.backgroundVideo || record.ctaText);
     case "summary":
       return !!(record.bio || record.quote || (Array.isArray(record.highlights) && record.highlights.length > 0));
     case "map":
-      return !!(record.latitude && record.longitude);
+      return !!((record.lat || record.latitude) && (record.lng || record.longitude));
     case "skills":
       return Array.isArray(record.skills) && record.skills.length > 0;
     case "experiences":
@@ -250,11 +252,33 @@ function isSectionFilled(sectionId: string, data: unknown): boolean {
   }
 }
 
+const SECTIONS_WITHOUT_BACKGROUND = new Set(["cover", "profile"]);
+
 export function SectionPanel({ sections, onSectionChange, consultantAddress, consultantId }: SectionPanelProps) {
   return (
     <Accordion.Root type="single" collapsible className="space-y-2">
       {LANDING_SECTIONS.map((section) => {
         const filled = isSectionFilled(section.id, sections[section.id]);
+        const sectionRecord = asRecord(sections[section.id]);
+        const currentBg = sectionRecord.background as SectionBackground | undefined;
+        const showBgEditor = !SECTIONS_WITHOUT_BACKGROUND.has(section.id);
+
+        const handleContentChange = (contentData: unknown) => {
+          const content = asRecord(contentData);
+          if (currentBg && currentBg.type !== "default") {
+            content.background = currentBg;
+          }
+          onSectionChange(section.id, content);
+        };
+
+        const handleBackgroundChange = (bg: SectionBackground) => {
+          const { background: _, ...content } = sectionRecord;
+          onSectionChange(
+            section.id,
+            bg.type === "default" ? content : { ...content, background: bg },
+          );
+        };
+
         return (
         <Accordion.Item
           key={section.id}
@@ -288,9 +312,23 @@ export function SectionPanel({ sections, onSectionChange, consultantAddress, con
               {getSectionEditor(
                 section.id,
                 sections[section.id],
-                (data) => onSectionChange(section.id, data),
+                handleContentChange,
                 consultantAddress,
                 consultantId,
+              )}
+
+              {showBgEditor && (
+                <details className="mt-4 rounded-lg border p-3">
+                  <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground">
+                    Sfondo sezione
+                  </summary>
+                  <div className="mt-3">
+                    <SectionBackgroundEditor
+                      data={currentBg ?? { type: "default" }}
+                      onChange={handleBackgroundChange}
+                    />
+                  </div>
+                </details>
               )}
             </div>
           </Accordion.Content>

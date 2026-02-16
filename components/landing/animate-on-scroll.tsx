@@ -258,6 +258,20 @@ export function CountUp({
 }
 
 /* ------------------------------------------------------------------ */
+/*  ScrollToTop - Forces page to start at top on mount                */
+/* ------------------------------------------------------------------ */
+
+export function ScrollToTop() {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.history.scrollRestoration = "manual";
+      window.scrollTo(0, 0);
+    }
+  }, []);
+  return null;
+}
+
+/* ------------------------------------------------------------------ */
 /*  ScrollProgress - Progress bar at top of page                      */
 /* ------------------------------------------------------------------ */
 
