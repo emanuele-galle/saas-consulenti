@@ -60,7 +60,7 @@ async function main() {
       efpa: true,
       efpaEsg: true,
       sustainableAdvisor: true,
-      linkedinUrl: "https://linkedin.com/in/giuseppe-guglielmo",
+      linkedinUrl: "https://www.linkedin.com/in/giuseppe-guglielmo-4255b02a/",
     },
   });
   console.log(`Consultant created: ${consultant.firstName} ${consultant.lastName}`);
@@ -94,11 +94,11 @@ async function main() {
       },
       skillsData: {
         skills: [
-          { name: "Analisi Asset Allocation", description: "Ottimizzazione dell'allocazione patrimoniale" },
-          { name: "Portfolio Management", description: "Gestione attiva di portafogli diversificati" },
-          { name: "Wealth Management", description: "Pianificazione patrimoniale integrata" },
-          { name: "Financial Markets", description: "Analisi dei mercati finanziari globali" },
-          { name: "Consulenza ESG", description: "Investimenti sostenibili e responsabili" },
+          { name: "Consulenza patrimoniale", description: "Ottimizzazione dell'allocazione patrimoniale" },
+          { name: "Pianificazione a lungo termine", description: "Gestione attiva di portafogli diversificati" },
+          { name: "Protezione del patrimonio", description: "Pianificazione patrimoniale integrata" },
+          { name: "Consulenza per imprenditori", description: "Analisi dei mercati finanziari globali" },
+          { name: "Monitoraggio e revisione", description: "Investimenti sostenibili e responsabili" },
         ],
       },
       experiencesData: {
@@ -116,19 +116,15 @@ async function main() {
             description: "Consulenza finanziaria per clienti private con patrimoni significativi.",
           },
           {
-            company: "Generali Italia",
-            role: "Financial Planner",
-            period: "2008 - 2012",
-            description: "Pianificazione finanziaria e assicurativa per clientela retail e affluent.",
+            company: "Universita di Messina",
+            role: "Laurea in Scienze Bancarie e Assicurative",
+            period: "",
+            description: "",
           },
         ],
       },
       educationData: {
-        items: [
-          { institution: "Università Bocconi", degree: "Laurea in Economia e Finanza", year: "2008" },
-          { institution: "EFPA", degree: "Certificazione EFA - European Financial Advisor", year: "2013" },
-          { institution: "EFPA", degree: "Certificazione ESG Advisor", year: "2021" },
-        ],
+        items: [],
       },
       interestsData: {
         interests: [

@@ -159,7 +159,7 @@ export function SkillsEditor({ data, onChange }: SkillsEditorProps) {
             {...register(`skills.${index}.forWho`)}
           />
           <Input
-            placeholder="Cosa facciamo (opzionale)"
+            placeholder="Cosa faccio (opzionale)"
             {...register(`skills.${index}.whatWeDo`)}
           />
           <Input

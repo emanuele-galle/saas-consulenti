@@ -125,7 +125,7 @@ export function ContactForm({
     ? `https://maps.google.com/maps?q=${mapData!.latitude},${mapData!.longitude}&z=${mapData!.zoom ?? 15}&output=embed`
     : null;
 
-  const inputClasses = "bg-white/5 border-white/10 rounded-lg text-white placeholder:text-white/40 focus:border-[var(--theme-color)] focus-visible:ring-[var(--theme-color)]";
+  const inputClasses = "bg-gray-50 border-gray-200 rounded-lg text-gray-900 placeholder:text-gray-400 focus:border-[var(--theme-color)] focus-visible:ring-[var(--theme-color)]";
 
   return (
     <section
@@ -148,38 +148,13 @@ export function ContactForm({
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-start">
           {/* Left Column: Consultant profile + Info + Map */}
           <div>
-            {/* Consultant profile */}
-            <div className="mb-8 flex items-center gap-5">
-              {consultantImage && (
-                <div
-                  className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full ring-2 ring-offset-2 ring-offset-[#0c0c0c]"
-                  style={{ "--tw-ring-color": "var(--theme-color)" } as React.CSSProperties}
-                >
-                  <Image
-                    src={consultantImage}
-                    alt={consultantName}
-                    fill
-                    className="object-cover"
-                    sizes="80px"
-                    unoptimized
-                  />
-                </div>
-              )}
-              <div>
-                <h3 className="text-lg font-bold text-white">{consultantName}</h3>
-                {consultantRole && (
-                  <p className="text-sm text-white/50">{consultantRole}</p>
-                )}
-              </div>
-            </div>
-
             <p
               className="mb-3 text-xs font-semibold uppercase tracking-[0.15em]"
               style={{ color: "#D4A537" }}
             >
               Contatti
             </p>
-            <h2 className="mb-4 font-display text-[clamp(2rem,4vw,3.5rem)] tracking-[-0.02em] text-white">
+            <h2 className="mb-4 font-display text-[clamp(1.5rem,3vw,2.25rem)] tracking-[-0.02em] text-white">
               Iniziamo a parlare
             </h2>
             <p className="mb-10 max-w-md text-base text-white/50 leading-relaxed">
@@ -189,34 +164,34 @@ export function ContactForm({
             {/* Contact info */}
             <div className="mb-10 space-y-5">
               {consultantEmail && (
-                <a href={`mailto:${consultantEmail}`} className="group flex items-center gap-4 text-white/60 transition-colors hover:text-white">
+                <a href={`mailto:${consultantEmail}`} className="group flex items-center gap-4 text-white transition-colors hover:text-white">
                   <span
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors"
-                    style={{ backgroundColor: "color-mix(in srgb, var(--theme-color) 15%, transparent)" }}
+                    style={{ backgroundColor: "var(--theme-color)" }}
                   >
-                    <Mail className="h-4 w-4" style={{ color: "var(--theme-color)" }} />
+                    <Mail className="h-4 w-4 text-white" />
                   </span>
                   <span className="text-base">{consultantEmail}</span>
                 </a>
               )}
               {consultantPhone && (
-                <a href={`tel:${consultantPhone}`} className="group flex items-center gap-4 text-white/60 transition-colors hover:text-white">
+                <a href={`tel:${consultantPhone}`} className="group flex items-center gap-4 text-white transition-colors hover:text-white">
                   <span
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full transition-colors"
-                    style={{ backgroundColor: "color-mix(in srgb, var(--theme-color) 15%, transparent)" }}
+                    style={{ backgroundColor: "var(--theme-color)" }}
                   >
-                    <Phone className="h-4 w-4" style={{ color: "var(--theme-color)" }} />
+                    <Phone className="h-4 w-4 text-white" />
                   </span>
                   <span className="text-base">{consultantPhone}</span>
                 </a>
               )}
               {consultantAddress && (
-                <div className="flex items-start gap-4 text-white/60">
+                <div className="flex items-start gap-4 text-white">
                   <span
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
-                    style={{ backgroundColor: "color-mix(in srgb, var(--theme-color) 15%, transparent)" }}
+                    style={{ backgroundColor: "var(--theme-color)" }}
                   >
-                    <MapPin className="h-4 w-4" style={{ color: "var(--theme-color)" }} />
+                    <MapPin className="h-4 w-4 text-white" />
                   </span>
                   <span className="pt-2 text-base">{consultantAddress}</span>
                 </div>
@@ -245,7 +220,7 @@ export function ContactForm({
           {/* Right Column: Form */}
           <div>
             <div
-              className="relative rounded-2xl border border-white/[0.15] bg-white/[0.04] p-6 sm:p-8"
+              className="relative rounded-2xl border border-white/[0.15] bg-white p-6 sm:p-8"
               style={{
                 boxShadow: "0 4px 40px color-mix(in srgb, var(--theme-color) 6%, transparent)",
               }}
@@ -261,14 +236,14 @@ export function ContactForm({
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 {/* Honeypot */}
-                <div style={{ position: "absolute", left: "-9999px", opacity: 0 }} aria-hidden="true">
+                <div style={{ position: "absolute", left: "-9999px", opacity: 0 }} aria-hidden="true" tabIndex={-1}>
                   <input type="text" id="contact_website" name="website" tabIndex={-1} autoComplete="off" />
                 </div>
 
                 {/* Name Fields */}
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="firstName" className="text-sm font-medium uppercase tracking-wide text-white/70">
+                    <Label htmlFor="firstName" className="text-sm font-medium uppercase tracking-wide text-gray-700">
                       Nome *
                     </Label>
                     <Input
@@ -283,7 +258,7 @@ export function ContactForm({
                     )}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="lastName" className="text-sm font-medium uppercase tracking-wide text-white/70">
+                    <Label htmlFor="lastName" className="text-sm font-medium uppercase tracking-wide text-gray-700">
                       Cognome *
                     </Label>
                     <Input
@@ -301,7 +276,7 @@ export function ContactForm({
 
                 {/* Email */}
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium uppercase tracking-wide text-white/70">
+                  <Label htmlFor="email" className="text-sm font-medium uppercase tracking-wide text-gray-700">
                     Email *
                   </Label>
                   <Input
@@ -319,7 +294,7 @@ export function ContactForm({
 
                 {/* Phone */}
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-sm font-medium uppercase tracking-wide text-white/70">
+                  <Label htmlFor="phone" className="text-sm font-medium uppercase tracking-wide text-gray-700">
                     Telefono
                   </Label>
                   <Input
@@ -333,7 +308,7 @@ export function ContactForm({
 
                 {/* Message */}
                 <div className="space-y-2">
-                  <Label htmlFor="message" className="text-sm font-medium uppercase tracking-wide text-white/70">
+                  <Label htmlFor="message" className="text-sm font-medium uppercase tracking-wide text-gray-700">
                     Messaggio
                   </Label>
                   <Textarea
@@ -351,9 +326,10 @@ export function ContactForm({
                     id="isExistingClient"
                     checked={isExistingClient}
                     onCheckedChange={(checked) => setValue("isExistingClient", checked === true)}
-                    className="border-white/20 data-[state=checked]:bg-[var(--theme-color)] data-[state=checked]:border-[var(--theme-color)]"
+                    className="border-gray-300 data-[state=checked]:bg-[var(--theme-color)] data-[state=checked]:border-[var(--theme-color)]"
+                    aria-label="Sono già cliente"
                   />
-                  <Label htmlFor="isExistingClient" className="cursor-pointer text-sm font-normal text-white/70">
+                  <Label htmlFor="isExistingClient" className="cursor-pointer text-sm font-normal text-gray-700">
                     Sono già cliente
                   </Label>
                 </div>
@@ -382,7 +358,7 @@ export function ContactForm({
                 </Button>
 
                 {/* Privacy note */}
-                <p className="text-center text-xs text-white/30 leading-relaxed">
+                <p className="text-center text-xs text-gray-400 leading-relaxed">
                   Inviando il modulo acconsenti al trattamento dei dati personali per essere ricontattato.
                 </p>
               </form>

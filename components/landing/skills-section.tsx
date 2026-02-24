@@ -46,143 +46,189 @@ interface SkillsSectionProps {
   skillsData: SkillsData;
 }
 
-function SkillCard({ skill }: { skill: Skill }) {
+function SkillImage({ skill, className }: { skill: Skill; className?: string }) {
   const IconComponent = skill.icon ? ICON_MAP[skill.icon] : null;
 
-  const card = (
-    <div
-      className="card-bold group h-full overflow-hidden rounded-2xl transition-all duration-500"
-      style={{
-        transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-      }}
-      onMouseEnter={(e) => {
-        const el = e.currentTarget;
-        el.style.transform = "translateY(-4px)";
-        el.style.boxShadow =
-          "0 24px 60px rgba(0,0,0,0.1), 0 0 0 1px rgba(194,29,23,0.15)";
-      }}
-      onMouseLeave={(e) => {
-        const el = e.currentTarget;
-        el.style.transform = "translateY(0)";
-        el.style.boxShadow = "";
-      }}
-    >
-      {/* Image top */}
-      {skill.imageUrl ? (
-        <div className="relative aspect-[16/10] w-full overflow-hidden">
-          <Image
-            src={skill.imageUrl}
-            alt={skill.name}
-            fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
-            unoptimized
-          />
-          {/* Overlay gradient on hover */}
-          <div
-            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(194,29,23,0.15) 0%, transparent 60%)",
-            }}
-          />
-        </div>
-      ) : (
+  if (skill.imageUrl) {
+    return (
+      <div className={`relative w-full overflow-hidden ${className ?? "aspect-[16/10]"}`}>
+        <Image
+          src={skill.imageUrl}
+          alt={skill.name}
+          fill
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
+          unoptimized
+        />
         <div
-          className="flex aspect-[16/10] items-center justify-center"
+          className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
             background:
-              "linear-gradient(135deg, rgba(194,29,23,0.04) 0%, rgba(212,165,55,0.06) 100%)",
+              "linear-gradient(to top, rgba(194,29,23,0.15) 0%, transparent 60%)",
+          }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`flex items-center justify-center ${className ?? "aspect-[16/10]"}`}
+      style={{
+        background:
+          "linear-gradient(135deg, rgba(194,29,23,0.04) 0%, rgba(212,165,55,0.06) 100%)",
+      }}
+    >
+      {skill.imageIcon ? (
+        <div className="relative h-16 w-16">
+          <Image src={skill.imageIcon} alt={skill.name} fill className="object-contain" unoptimized />
+        </div>
+      ) : IconComponent ? (
+        <div
+          className="flex h-20 w-20 items-center justify-center rounded-2xl"
+          style={{
+            background:
+              "linear-gradient(135deg, var(--theme-color, #C21D17), #E8312B)",
+            boxShadow: "0 8px 24px rgba(194,29,23,0.2)",
           }}
         >
-          {skill.imageIcon ? (
-            <div className="relative h-16 w-16">
-              <Image src={skill.imageIcon} alt={skill.name} fill className="object-contain" unoptimized />
+          <IconComponent className="h-10 w-10 text-white" />
+        </div>
+      ) : (
+        <span
+          className="text-5xl font-black"
+          style={{ color: "var(--theme-color, #C21D17)", opacity: 0.15 }}
+        >
+          {skill.name.charAt(0).toUpperCase()}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function SkillTextContent({ skill }: { skill: Skill }) {
+  return (
+    <>
+      <h3 className="text-xl font-bold text-[#1A1A1A]">{skill.name}</h3>
+      {skill.description && (
+        <p className="mt-3 text-base leading-[1.7] text-[#6B7280]">
+          {skill.description}
+        </p>
+      )}
+      {(skill.forWho || skill.whatWeDo || skill.benefit) && (
+        <div className="mt-5 space-y-4 border-t border-[#E5E7EB]/60 pt-5">
+          {skill.forWho && (
+            <div>
+              <span
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "var(--theme-color, #C21D17)" }}
+              >
+                Per chi
+              </span>
+              <p className="mt-1 text-sm leading-relaxed text-[#6B7280]">{skill.forWho}</p>
             </div>
-          ) : IconComponent ? (
-            <div
-              className="flex h-20 w-20 items-center justify-center rounded-2xl"
-              style={{
-                background:
-                  "linear-gradient(135deg, var(--theme-color, #C21D17), #E8312B)",
-                boxShadow: "0 8px 24px rgba(194,29,23,0.2)",
-              }}
-            >
-              <IconComponent className="h-10 w-10 text-white" />
+          )}
+          {skill.whatWeDo && (
+            <div>
+              <span
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "var(--theme-color, #C21D17)" }}
+              >
+                Cosa faccio
+              </span>
+              <p className="mt-1 text-sm leading-relaxed text-[#6B7280]">{skill.whatWeDo}</p>
             </div>
-          ) : (
-            <span
-              className="text-5xl font-black"
-              style={{ color: "var(--theme-color, #C21D17)", opacity: 0.15 }}
-            >
-              {skill.name.charAt(0).toUpperCase()}
-            </span>
+          )}
+          {skill.benefit && (
+            <div>
+              <span
+                className="text-xs font-semibold uppercase tracking-wider"
+                style={{ color: "var(--generali-gold, #D4A537)" }}
+              >
+                Il beneficio
+              </span>
+              <p className="mt-1 text-sm font-medium text-[#1A1A1A]">{skill.benefit}</p>
+            </div>
           )}
         </div>
       )}
+    </>
+  );
+}
 
-      {/* Body */}
+const hoverHandlers = {
+  onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    el.style.transform = "translateY(-4px)";
+    el.style.boxShadow =
+      "0 24px 60px rgba(0,0,0,0.1), 0 0 0 1px rgba(194,29,23,0.15)";
+  },
+  onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    el.style.transform = "translateY(0)";
+    el.style.boxShadow = "";
+  },
+};
+
+const accentLine = (
+  <div
+    className="h-1 w-0 transition-all duration-500 group-hover:w-full"
+    style={{
+      background:
+        "linear-gradient(to right, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+      transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+    }}
+  />
+);
+
+function SkillCard({ skill }: { skill: Skill }) {
+  const card = (
+    <div
+      className="card-bold group h-full overflow-hidden rounded-2xl transition-all duration-500"
+      style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
+      {...hoverHandlers}
+    >
+      <SkillImage skill={skill} />
       <div className="p-8">
-        <h3 className="text-xl font-bold text-[#1A1A1A]">{skill.name}</h3>
-        {skill.description && (
-          <p className="mt-3 text-base leading-[1.7] text-[#6B7280]">
-            {skill.description}
-          </p>
-        )}
-        {(skill.forWho || skill.whatWeDo || skill.benefit) && (
-          <div className="mt-5 space-y-4 border-t border-[#E5E7EB]/60 pt-5">
-            {skill.forWho && (
-              <div>
-                <span
-                  className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "var(--theme-color, #C21D17)" }}
-                >
-                  Per chi
-                </span>
-                <p className="mt-1 text-sm leading-relaxed text-[#6B7280]">{skill.forWho}</p>
-              </div>
-            )}
-            {skill.whatWeDo && (
-              <div>
-                <span
-                  className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "var(--theme-color, #C21D17)" }}
-                >
-                  Cosa facciamo
-                </span>
-                <p className="mt-1 text-sm leading-relaxed text-[#6B7280]">{skill.whatWeDo}</p>
-              </div>
-            )}
-            {skill.benefit && (
-              <div>
-                <span
-                  className="text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: "var(--generali-gold, #D4A537)" }}
-                >
-                  Il beneficio
-                </span>
-                <p className="mt-1 text-sm font-medium text-[#1A1A1A]">{skill.benefit}</p>
-              </div>
-            )}
-          </div>
-        )}
+        <SkillTextContent skill={skill} />
       </div>
-
-      {/* Bottom accent gradient line on hover */}
-      <div
-        className="h-1 w-0 transition-all duration-500 group-hover:w-full"
-        style={{
-          background:
-            "linear-gradient(to right, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
-          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
-        }}
-      />
+      {accentLine}
     </div>
   );
 
   if (skill.linkUrl) {
     return (
       <a href={skill.linkUrl} target="_blank" rel="noopener noreferrer" className="block h-full">
+        {card}
+      </a>
+    );
+  }
+  return card;
+}
+
+function SkillCardHorizontal({ skill, reversed }: { skill: Skill; reversed: boolean }) {
+  const card = (
+    <div
+      className="card-bold group overflow-hidden rounded-2xl transition-all duration-500"
+      style={{ transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)" }}
+      {...hoverHandlers}
+    >
+      <div className={`flex flex-col ${reversed ? "md:flex-row-reverse" : "md:flex-row"}`}>
+        <SkillImage
+          skill={skill}
+          className="aspect-[16/10] md:aspect-auto md:w-1/2 md:min-h-[300px]"
+        />
+        <div className="flex flex-col justify-center p-8 md:w-1/2 md:px-10 lg:px-12">
+          <SkillTextContent skill={skill} />
+        </div>
+      </div>
+      {accentLine}
+    </div>
+  );
+
+  if (skill.linkUrl) {
+    return (
+      <a href={skill.linkUrl} target="_blank" rel="noopener noreferrer" className="block">
         {card}
       </a>
     );
@@ -210,13 +256,23 @@ export function SkillsSection({ skillsData }: SkillsSectionProps) {
           {title}
         </h2>
 
-        <StaggerContainer className="grid gap-10 md:grid-cols-2">
-          {skills.map((skill, index) => (
-            <StaggerItem key={index}>
-              <SkillCard skill={skill} />
-            </StaggerItem>
-          ))}
-        </StaggerContainer>
+        {skills.length % 2 !== 0 ? (
+          <StaggerContainer className="flex flex-col gap-10">
+            {skills.map((skill, index) => (
+              <StaggerItem key={index}>
+                <SkillCardHorizontal skill={skill} reversed={index % 2 !== 0} />
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        ) : (
+          <StaggerContainer className="grid gap-10 md:grid-cols-2">
+            {skills.map((skill, index) => (
+              <StaggerItem key={index}>
+                <SkillCard skill={skill} />
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        )}
 
         {skillsData.videoUrl && (
           <InlineVideo url={skillsData.videoUrl} />
