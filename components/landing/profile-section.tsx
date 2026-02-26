@@ -129,7 +129,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
         >
           <div className="flex flex-col lg:flex-row">
             {/* Left: Photo + Name + Role */}
-            <div className="flex flex-col items-center px-8 py-12 lg:w-5/12 lg:px-12 lg:py-16">
+            <div className="flex flex-col items-center px-6 py-8 lg:w-5/12 lg:px-10 lg:py-12">
               {/* Profile image */}
               {consultant.profileImage ? (
                 <motion.div
@@ -140,12 +140,9 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
                   className="relative mb-8"
                 >
                   <div
-                    className="absolute -inset-1.5 rounded-full opacity-60 blur-md"
-                    style={{
-                      background: `linear-gradient(135deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))`,
-                    }}
-                  />
-                  <div className="relative h-40 w-40 overflow-hidden rounded-full border-4 border-white shadow-xl sm:h-48 sm:w-48">
+                    className="relative h-40 w-40 overflow-hidden rounded-full shadow-xl sm:h-48 sm:w-48"
+                    style={{ border: "4px solid var(--theme-color, #C21D17)" }}
+                  >
                     <Image
                       src={consultant.profileImage}
                       alt={fullName}
@@ -218,7 +215,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: 0.55, ease: "easeOut" }}
-                  className="mt-8 flex flex-wrap items-center justify-center gap-3"
+                  className="mt-6 flex flex-wrap items-center justify-center gap-3"
                 >
                   {activeCertifications.map((cert) => {
                     const Icon = cert.icon;
@@ -240,52 +237,12 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
                   })}
                 </motion.div>
               )}
-
-              {/* Social links */}
-              {activeSocials.length > 0 && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.6, ease: "easeOut" }}
-                  className="mt-8 flex items-center gap-3"
-                >
-                  {activeSocials.map((s) => {
-                    const Icon = s.icon;
-                    const url = consultant[s.key];
-                    return (
-                      <a
-                        key={s.key}
-                        href={url!}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E5E7EB] text-[#6B7280] transition-all duration-300 hover:border-transparent hover:text-white hover:shadow-lg"
-                        style={
-                          {
-                            "--hover-bg": "var(--theme-color, #C21D17)",
-                          } as React.CSSProperties
-                        }
-                        onMouseEnter={(e) => {
-                          (e.currentTarget.style.background =
-                            "var(--theme-color, #C21D17)");
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget.style.background = "transparent");
-                        }}
-                        aria-label={s.label}
-                      >
-                        <Icon className="h-4 w-4" />
-                      </a>
-                    );
-                  })}
-                </motion.div>
-              )}
             </div>
 
             {/* Right: Contact info */}
             {hasContactInfo && (
               <div className="border-t border-[#E5E7EB] lg:border-l lg:border-t-0 lg:w-7/12">
-                <div className="px-8 py-12 lg:px-12 lg:py-16">
+                <div className="px-6 py-8 lg:px-10 lg:py-12">
                   <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -457,6 +414,45 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
                       </motion.div>
                     )}
                   </div>
+
+                  {/* Social links */}
+                  {activeSocials.length > 0 && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{
+                        duration: 0.4,
+                        delay: 0.6,
+                        ease: "easeOut",
+                      }}
+                      className="mt-8 flex items-center gap-3"
+                    >
+                      {activeSocials.map((s) => {
+                        const Icon = s.icon;
+                        const url = consultant[s.key];
+                        return (
+                          <a
+                            key={s.key}
+                            href={url!}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex h-10 w-10 items-center justify-center rounded-full border border-[#E5E7EB] text-[#6B7280] transition-all duration-300 hover:border-transparent hover:text-white hover:shadow-lg"
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background =
+                                "var(--theme-color, #C21D17)";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "transparent";
+                            }}
+                            aria-label={s.label}
+                          >
+                            <Icon className="h-4 w-4" />
+                          </a>
+                        );
+                      })}
+                    </motion.div>
+                  )}
                 </div>
               </div>
             )}

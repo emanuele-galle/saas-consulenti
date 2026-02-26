@@ -45,8 +45,8 @@ export function SummarySection({ summaryData, consultant }: SummarySectionProps)
         >
           {/* Left: Photo */}
           {profilePhoto && (
-            <AnimateOnScroll variant="fade-left">
-              <div className="shrink-0 lg:w-5/12">
+            <AnimateOnScroll variant="fade-left" className="shrink-0 lg:w-5/12">
+              <div>
                 <div
                   className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl"
                   style={{
@@ -68,8 +68,8 @@ export function SummarySection({ summaryData, consultant }: SummarySectionProps)
           )}
 
           {/* Right: Content */}
-          <AnimateOnScroll variant="fade-right">
-            <div className={profilePhoto ? "lg:w-7/12" : "w-full"}>
+          <AnimateOnScroll variant="fade-right" className={profilePhoto ? "lg:w-7/12" : "w-full"}>
+            <div>
               <p
                 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
                 style={{ color: "var(--generali-gold, #D4A537)" }}
@@ -103,11 +103,9 @@ export function SummarySection({ summaryData, consultant }: SummarySectionProps)
                 <blockquote
                   className="my-10 rounded-r-xl py-5 pl-7 pr-4"
                   style={{
-                    borderLeft: "4px solid transparent",
-                    borderImage:
-                      "linear-gradient(to bottom, var(--theme-color, #C21D17), var(--generali-gold, #D4A537)) 1",
+                    borderLeft: "4px solid var(--theme-color, #C21D17)",
                     background:
-                      "linear-gradient(135deg, rgba(194,29,23,0.03) 0%, rgba(212,165,55,0.03) 100%)",
+                      "rgba(194,29,23,0.04)",
                   }}
                 >
                   <p className="text-xl font-medium italic leading-relaxed text-[#1A1A1A]">

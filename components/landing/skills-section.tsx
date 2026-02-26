@@ -75,8 +75,7 @@ function SkillImage({ skill, className }: { skill: Skill; className?: string }) 
     <div
       className={`flex items-center justify-center ${className ?? "aspect-[16/10]"}`}
       style={{
-        background:
-          "linear-gradient(135deg, rgba(194,29,23,0.04) 0%, rgba(212,165,55,0.06) 100%)",
+        background: "rgba(194,29,23,0.05)",
       }}
     >
       {skill.imageIcon ? (
@@ -174,8 +173,7 @@ const accentLine = (
   <div
     className="h-1 w-0 transition-all duration-500 group-hover:w-full"
     style={{
-      background:
-        "linear-gradient(to right, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+      background: "var(--theme-color, #C21D17)",
       transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
     }}
   />

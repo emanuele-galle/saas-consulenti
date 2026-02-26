@@ -75,7 +75,7 @@ export function PortfolioSection({ portfolioData, focusOnData }: PortfolioSectio
           <div
             className="mx-auto mt-6 h-0.5 w-16"
             style={{
-              background: "linear-gradient(90deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+              background: "var(--theme-color, #C21D17)",
             }}
           />
         </div>

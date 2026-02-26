@@ -49,8 +49,7 @@ export function BannerSection({ bannerData }: BannerSectionProps) {
         <div
           className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           style={{
-            background:
-              "linear-gradient(135deg, rgba(194,29,23,0.08) 0%, rgba(212,165,55,0.06) 100%)",
+            background: "rgba(194,29,23,0.08)",
           }}
         />
       )}

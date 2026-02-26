@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Star } from "lucide-react";
 import { StaggerContainer, StaggerItem } from "@/components/landing/animate-on-scroll";
 import { InlineVideo } from "@/components/landing/inline-video";
@@ -59,7 +58,7 @@ export function TestimonialsSection({ testimonialsData }: TestimonialsSectionPro
           <div
             className="mx-auto mt-6 h-0.5 w-16"
             style={{
-              background: "linear-gradient(90deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+              background: "var(--theme-color, #C21D17)",
             }}
           />
         </div>
@@ -114,39 +113,11 @@ export function TestimonialsSection({ testimonialsData }: TestimonialsSectionPro
                 </p>
 
                 {/* Author */}
-                <div className="relative z-10 flex items-center gap-4 border-t border-white/[0.08] pt-6">
-                  {t.imageUrl ? (
-                    <div
-                      className="relative h-12 w-12 shrink-0 overflow-hidden rounded-full"
-                      style={{
-                        boxShadow: "0 0 0 2px rgba(255,255,255,0.1), 0 0 0 4px rgba(212,165,55,0.15)",
-                      }}
-                    >
-                      <Image
-                        src={t.imageUrl}
-                        alt={t.name}
-                        fill
-                        className="object-cover"
-                        unoptimized
-                      />
-                    </div>
-                  ) : (
-                    <div
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
-                      style={{
-                        background: "linear-gradient(135deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
-                        boxShadow: "0 0 0 2px rgba(255,255,255,0.1), 0 4px 12px rgba(194,29,23,0.3)",
-                      }}
-                    >
-                      {t.name.charAt(0).toUpperCase()}
-                    </div>
+                <div className="relative z-10 border-t border-white/[0.08] pt-6">
+                  <p className="font-semibold text-white">{t.name}</p>
+                  {t.role && (
+                    <p className="mt-0.5 text-sm text-white/45">{t.role}</p>
                   )}
-                  <div>
-                    <p className="font-semibold text-white">{t.name}</p>
-                    {t.role && (
-                      <p className="text-sm text-white/45">{t.role}</p>
-                    )}
-                  </div>
                 </div>
               </div>
             </StaggerItem>

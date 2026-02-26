@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Linkedin, Facebook, Twitter, Instagram, Youtube, Globe, ArrowUp } from "lucide-react";
 
 interface FooterProps {
@@ -11,12 +14,12 @@ interface FooterProps {
   websiteUrl?: string | null;
 }
 
-const QUICK_LINKS = [
+const ALL_QUICK_LINKS = [
   { label: "Chi Sono", href: "#chi-sono" },
   { label: "Servizi", href: "#servizi" },
   { label: "Portfolio", href: "#portfolio" },
   { label: "Contatti", href: "#contatti" },
-] as const;
+];
 
 const SOCIAL_MAP = [
   { key: "linkedinUrl", icon: Linkedin, label: "LinkedIn" },
@@ -37,6 +40,15 @@ export function LandingFooter({
   youtubeUrl,
   websiteUrl,
 }: FooterProps) {
+  const [quickLinks, setQuickLinks] = useState(ALL_QUICK_LINKS);
+
+  useEffect(() => {
+    const existing = ALL_QUICK_LINKS.filter(
+      (link) => document.getElementById(link.href.slice(1)) !== null
+    );
+    if (existing.length > 0) setQuickLinks(existing);
+  }, []);
+
   const socialUrls: Record<string, string | null | undefined> = {
     linkedinUrl, facebookUrl, twitterUrl, instagramUrl, youtubeUrl, websiteUrl,
   };
@@ -49,7 +61,7 @@ export function LandingFooter({
       <div
         className="h-px"
         style={{
-          background: "linear-gradient(90deg, transparent, var(--theme-color, #C21D17), var(--generali-gold, #D4A537), var(--theme-color, #C21D17), transparent)",
+          background: "linear-gradient(90deg, transparent, var(--theme-color, #C21D17), var(--theme-color, #C21D17), transparent)",
           opacity: 0.3,
         }}
       />
@@ -59,24 +71,24 @@ export function LandingFooter({
           {/* Col 1: Logo + Name */}
           <div>
             {consultantName && (
-              <p className="mb-5 font-display text-xl font-bold text-white/80">{consultantName}</p>
+              <p className="mb-5 font-display text-xl font-bold text-white">{consultantName}</p>
             )}
             {consultantRole && (
-              <p className="mt-1 text-sm text-white/40">{consultantRole}</p>
+              <p className="mt-1 text-sm text-white">{consultantRole}</p>
             )}
           </div>
 
           {/* Col 2: Quick Links */}
           <div>
-            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/30">
+            <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Link rapidi
             </h4>
             <nav className="flex flex-col gap-3">
-              {QUICK_LINKS.map((link) => (
+              {quickLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-sm text-white/50 transition-colors duration-300 hover:text-white"
+                  className="text-sm text-white transition-colors duration-300 hover:text-white/80"
                 >
                   {link.label}
                 </a>
@@ -88,7 +100,7 @@ export function LandingFooter({
           <div>
             {activeSocials.length > 0 && (
               <>
-                <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white/30">
+                <h4 className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-white">
                   Seguimi
                 </h4>
                 <div className="flex gap-3">
@@ -100,7 +112,7 @@ export function LandingFooter({
                         href={socialUrls[s.key]!}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 transition-all duration-300 hover:border-[var(--theme-color,#C21D17)] hover:text-white hover:shadow-[0_0_15px_rgba(194,29,23,0.15)]"
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 hover:border-[var(--theme-color,#C21D17)] hover:text-white hover:shadow-[0_0_15px_rgba(194,29,23,0.15)]"
                         aria-label={s.label}
                       >
                         <Icon className="h-4 w-4" />
@@ -115,24 +127,24 @@ export function LandingFooter({
 
         {/* Bottom */}
         <div className="mt-14 flex flex-col items-center gap-4 border-t border-white/[0.06] pt-8 md:flex-row md:justify-between">
-          <p className="text-sm text-white/25">
+          <p className="text-sm text-white">
             &copy; {new Date().getFullYear()} Generali Italia S.p.A.
           </p>
 
           <div className="flex items-center gap-5">
-            <p className="text-xs text-white/15">
+            <p className="text-xs text-white/70">
               Realizzato da{" "}
-              <a href="https://www.pieromuscari.it" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition-colors duration-300">
+              <a href="https://www.pieromuscari.it" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">
                 Piero Muscari Storytailor
               </a>{" "}
               in collaborazione con{" "}
-              <a href="https://www.fodisrl.it" target="_blank" rel="noopener noreferrer" className="hover:text-white/40 transition-colors duration-300">
+              <a href="https://www.fodisrl.it" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors duration-300">
                 Fodi S.r.l.
               </a>
             </p>
             <a
               href="#"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 text-white/30 transition-all duration-300 hover:border-[var(--theme-color,#C21D17)] hover:text-white hover:-translate-y-0.5"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/30 text-white transition-all duration-300 hover:border-[var(--theme-color,#C21D17)] hover:text-white hover:-translate-y-0.5"
               aria-label="Torna in cima"
             >
               <ArrowUp className="h-4 w-4" />

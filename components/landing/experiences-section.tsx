@@ -101,12 +101,11 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
         {/* Timeline */}
         <div className="mx-auto max-w-3xl">
           <StaggerContainer className="relative pl-10 md:pl-12">
-            {/* Vertical gradient line */}
+            {/* Vertical line */}
             <div
               className="absolute left-[9px] top-2 bottom-2 w-[3px] rounded-full md:left-[11px]"
               style={{
-                background:
-                  "linear-gradient(to bottom, var(--theme-color, #C21D17) 0%, var(--generali-gold, #D4A537) 100%)",
+                background: "var(--theme-color, #C21D17)",
                 opacity: 0.7,
               }}
             />

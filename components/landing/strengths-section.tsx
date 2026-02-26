@@ -50,7 +50,7 @@ export function StrengthsSection({ strengthsData }: StrengthsSectionProps) {
         </p>
 
         {/* Title */}
-        <h2 className="font-display mb-6 text-center text-[clamp(2rem,4vw,3.5rem)] tracking-[-0.02em] text-[#1A1A1A]">
+        <h2 className="font-display mb-6 text-center text-[clamp(2rem,4vw,3.5rem)] tracking-[-0.02em] text-white">
           {title}
         </h2>
 
@@ -99,12 +99,11 @@ export function StrengthsSection({ strengthsData }: StrengthsSectionProps) {
                       "0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.04)";
                   }}
                 >
-                  {/* Left accent gradient bar */}
+                  {/* Left accent bar */}
                   <div
                     className="w-1.5 shrink-0"
                     style={{
-                      background:
-                        "linear-gradient(to bottom, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+                      background: "var(--theme-color, #C21D17)",
                     }}
                   />
 
@@ -115,8 +114,7 @@ export function StrengthsSection({ strengthsData }: StrengthsSectionProps) {
                         <div
                           className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
                           style={{
-                            background:
-                              "linear-gradient(135deg, rgba(194,29,23,0.1), rgba(212,165,55,0.08))",
+                            background: "rgba(194,29,23,0.1)",
                           }}
                         >
                           <IconComponent

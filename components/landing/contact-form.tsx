@@ -139,7 +139,7 @@ export function ContactForm({
       <div
         className="absolute top-0 left-0 right-0 h-px"
         style={{
-          background: `linear-gradient(90deg, transparent, var(--theme-color), #D4A537, var(--theme-color), transparent)`,
+          background: "linear-gradient(90deg, transparent, var(--theme-color, #C21D17), var(--theme-color, #C21D17), transparent)",
           opacity: 0.4,
         }}
       />
@@ -225,11 +225,11 @@ export function ContactForm({
                 boxShadow: "0 4px 40px color-mix(in srgb, var(--theme-color) 6%, transparent)",
               }}
             >
-              {/* Gold accent line at top of card */}
+              {/* Accent line at top of card */}
               <div
                 className="absolute top-0 left-6 right-6 h-px sm:left-8 sm:right-8"
                 style={{
-                  background: "linear-gradient(90deg, transparent, #D4A537, transparent)",
+                  background: "linear-gradient(90deg, transparent, var(--theme-color, #C21D17), transparent)",
                   opacity: 0.5,
                 }}
               />

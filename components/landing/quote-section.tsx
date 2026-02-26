@@ -48,8 +48,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
             transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
             className="relative py-6 pl-10"
             style={{
-              borderLeft: "4px solid transparent",
-              borderImage: "linear-gradient(to bottom, var(--theme-color, #C21D17), var(--generali-gold, #D4A537)) 1",
+              borderLeft: "4px solid var(--theme-color, #C21D17)",
             }}
           >
             {/* Decorative quote mark */}
@@ -68,7 +67,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
                 <div
                   className="h-px w-10"
                   style={{
-                    background: "linear-gradient(90deg, var(--generali-gold, #D4A537), transparent)",
+                    background: "linear-gradient(90deg, var(--theme-color, #C21D17), transparent)",
                   }}
                 />
                 <p className="text-base font-medium text-muted-foreground">
@@ -89,7 +88,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg, #0a0a0a 0%, color-mix(in srgb, var(--theme-color, #C21D17) 3%, #060606) 40%, color-mix(in srgb, var(--generali-gold, #D4A537) 2%, #080808) 70%, #0a0a0a 100%)",
+            "linear-gradient(180deg, #0a0a0a 0%, color-mix(in srgb, var(--theme-color, #C21D17) 3%, #060606) 40%, color-mix(in srgb, var(--theme-color, #C21D17) 2%, #080808) 70%, #0a0a0a 100%)",
         }}
       />
 
@@ -98,7 +97,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
         className="absolute left-0 top-0 h-px w-full"
         style={{
           background:
-            "linear-gradient(90deg, transparent 10%, var(--theme-color, #C21D17), var(--generali-gold, #D4A537), transparent 90%)",
+            "linear-gradient(90deg, transparent 10%, var(--theme-color, #C21D17), var(--theme-color, #C21D17), transparent 90%)",
           opacity: 0.15,
         }}
       />
@@ -107,7 +106,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
         className="absolute bottom-0 left-0 h-px w-full"
         style={{
           background:
-            "linear-gradient(90deg, transparent 10%, var(--generali-gold, #D4A537), var(--theme-color, #C21D17), transparent 90%)",
+            "linear-gradient(90deg, transparent 10%, var(--theme-color, #C21D17), var(--theme-color, #C21D17), transparent 90%)",
           opacity: 0.15,
         }}
       />
@@ -118,7 +117,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
         style={{
           width: "600px",
           height: "400px",
-          background: "radial-gradient(ellipse at center, color-mix(in srgb, var(--generali-gold, #D4A537) 4%, transparent) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at center, color-mix(in srgb, var(--theme-color, #C21D17) 4%, transparent) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -133,8 +132,8 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
           <QuoteMark
             className="mx-auto mb-10 h-14 w-16"
             style={{
-              color: "var(--generali-gold, #D4A537)",
-              opacity: 0.18,
+              color: "var(--theme-color, #C21D17)",
+              opacity: 0.7,
             }}
           />
           <blockquote className="font-display text-2xl font-light leading-relaxed tracking-tight text-white sm:text-3xl lg:text-[2.75rem] lg:leading-[1.3]">
@@ -146,12 +145,12 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
                 className="h-px w-12"
                 style={{
                   background:
-                    "linear-gradient(90deg, transparent, var(--generali-gold, #D4A537))",
+                    "linear-gradient(90deg, transparent, var(--theme-color, #C21D17))",
                 }}
               />
               <p
                 className="text-sm font-semibold uppercase tracking-[0.15em]"
-                style={{ color: "var(--generali-gold, #D4A537)", opacity: 0.6 }}
+                style={{ color: "var(--theme-color, #C21D17)" }}
               >
                 {author}
               </p>
@@ -159,7 +158,7 @@ export function QuoteSection({ quoteData }: QuoteSectionProps) {
                 className="h-px w-12"
                 style={{
                   background:
-                    "linear-gradient(90deg, var(--generali-gold, #D4A537), transparent)",
+                    "linear-gradient(90deg, var(--theme-color, #C21D17), transparent)",
                 }}
               />
             </div>

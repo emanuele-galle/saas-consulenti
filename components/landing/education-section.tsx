@@ -1,6 +1,7 @@
 "use client";
 
-import { GraduationCap } from "lucide-react";
+import Image from "next/image";
+import { Award } from "lucide-react";
 import { TextReveal, StaggerContainer, StaggerItem } from "@/components/landing/animate-on-scroll";
 import { InlineVideo } from "@/components/landing/inline-video";
 
@@ -8,6 +9,7 @@ interface EducationItem {
   institution: string;
   degree: string;
   year?: string;
+  imageUrl?: string;
 }
 
 interface EducationData {
@@ -27,7 +29,7 @@ export function EducationSection({ educationData }: EducationSectionProps) {
     return null;
   }
 
-  const title = educationData.title ?? "Formazione";
+  const title = educationData.title ?? "Le certificazioni";
 
   return (
     <section className="section-light py-12 lg:py-16">
@@ -37,7 +39,7 @@ export function EducationSection({ educationData }: EducationSectionProps) {
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.15em]"
           style={{ color: "var(--generali-gold, #D4A537)" }}
         >
-          Formazione
+          Certificazioni
         </p>
 
         {/* Title */}
@@ -72,28 +74,38 @@ export function EducationSection({ educationData }: EducationSectionProps) {
                     "0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.04)";
                 }}
               >
-                {/* Left border gradient */}
+                {/* Left border */}
                 <div
                   className="absolute left-0 top-0 bottom-0 w-1.5"
                   style={{
-                    background:
-                      "linear-gradient(to bottom, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+                    background: "var(--theme-color, #C21D17)",
                   }}
                 />
 
-                {/* Icon with gradient background */}
-                <div
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(194,29,23,0.12), rgba(212,165,55,0.08))",
-                  }}
-                >
-                  <GraduationCap
-                    className="h-5 w-5"
-                    style={{ color: "var(--theme-color, #C21D17)" }}
-                  />
-                </div>
+                {/* Certification image or fallback icon */}
+                {item.imageUrl ? (
+                  <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-gray-100">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.degree}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  </div>
+                ) : (
+                  <div
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
+                    style={{
+                      background: "rgba(194,29,23,0.1)",
+                    }}
+                  >
+                    <Award
+                      className="h-5 w-5"
+                      style={{ color: "var(--theme-color, #C21D17)" }}
+                    />
+                  </div>
+                )}
 
                 {/* Content */}
                 <div className="min-w-0 flex-1">
@@ -107,8 +119,7 @@ export function EducationSection({ educationData }: EducationSectionProps) {
                     <span
                       className="mt-3 inline-flex items-center rounded-full px-4 py-1 text-xs font-bold text-white"
                       style={{
-                        background:
-                          "linear-gradient(135deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+                        background: "var(--theme-color, #C21D17)",
                       }}
                     >
                       {item.year}

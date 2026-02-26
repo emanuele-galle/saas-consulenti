@@ -41,12 +41,11 @@ export function ProcessSection({ processData }: ProcessSectionProps) {
         )}
 
         <StaggerContainer className="relative">
-          {/* Vertical gradient line */}
+          {/* Vertical line */}
           <div
             className="absolute left-6 top-0 h-full w-px md:left-8"
             style={{
-              background:
-                "linear-gradient(to bottom, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+              background: "var(--theme-color, #C21D17)",
             }}
           />
 

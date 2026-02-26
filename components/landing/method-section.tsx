@@ -78,12 +78,11 @@ export function MethodSection({ methodData }: MethodSectionProps) {
                   el.style.boxShadow = "0 4px 24px rgba(0,0,0,0.06)";
                 }}
               >
-                {/* Top accent gradient bar */}
+                {/* Top accent bar */}
                 <div
                   className="h-1.5 w-full"
                   style={{
-                    background:
-                      "linear-gradient(to right, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+                    background: "var(--theme-color, #C21D17)",
                   }}
                 />
 
@@ -154,11 +153,8 @@ export function MethodSection({ methodData }: MethodSectionProps) {
                   <div
                     className="group rounded-xl p-7 transition-all duration-500"
                     style={{
-                      background:
-                        "linear-gradient(135deg, rgba(194,29,23,0.02) 0%, rgba(212,165,55,0.03) 100%)",
-                      borderLeft: "4px solid transparent",
-                      borderImage:
-                        "linear-gradient(to bottom, var(--theme-color, #C21D17), var(--generali-gold, #D4A537)) 1",
+                      background: "rgba(194,29,23,0.03)",
+                      borderLeft: "4px solid var(--theme-color, #C21D17)",
                       transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
                     onMouseEnter={(e) => {

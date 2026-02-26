@@ -104,8 +104,7 @@ export function ValuesSection({ valuesData }: ValuesSectionProps) {
                   <div
                     className="accent-line mt-5 h-0.5 w-0 transition-all duration-500 group-hover:w-full"
                     style={{
-                      background:
-                        "linear-gradient(to right, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+                      background: "var(--theme-color, #C21D17)",
                       transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
                   />

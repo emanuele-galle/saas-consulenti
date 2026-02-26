@@ -38,7 +38,7 @@ export function FaqSection({ faqData }: FaqSectionProps) {
           <div
             className="mx-auto mt-6 h-0.5 w-16"
             style={{
-              background: "linear-gradient(90deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537))",
+              background: "var(--theme-color, #C21D17)",
             }}
           />
           {faqData.subtitle && (
@@ -75,7 +75,7 @@ export function FaqSection({ faqData }: FaqSectionProps) {
                       <div
                         className="mb-5 h-px w-full"
                         style={{
-                          background: "linear-gradient(90deg, var(--theme-color, #C21D17), var(--generali-gold, #D4A537), transparent)",
+                          background: "linear-gradient(90deg, var(--theme-color, #C21D17), transparent)",
                           opacity: 0.2,
                         }}
                       />
