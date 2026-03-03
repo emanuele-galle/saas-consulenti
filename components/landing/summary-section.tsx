@@ -72,7 +72,7 @@ export function SummarySection({ summaryData, consultant }: SummarySectionProps)
             <div>
               <p
                 className="mb-3 text-xs font-semibold uppercase tracking-[0.2em]"
-                style={{ color: "var(--generali-gold, #D4A537)" }}
+                style={{ color: "var(--accent-gold, #D4A537)" }}
               >
                 Chi Sono
               </p>
@@ -122,7 +122,7 @@ export function SummarySection({ summaryData, consultant }: SummarySectionProps)
                         className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
                         style={{
                           background:
-                            "linear-gradient(135deg, var(--generali-gold, #D4A537), #E8C060)",
+                            "linear-gradient(135deg, var(--accent-gold, #D4A537), #E8C060)",
                           boxShadow: "0 2px 8px rgba(212,165,55,0.3)",
                         }}
                       >

@@ -46,7 +46,7 @@ test.describe("Consultants Page (Admin)", () => {
       timeout: 10_000,
     });
     await expect(
-      page.getByText("giuseppe.guglielmo@generali.it")
+      page.getByText("giuseppe.guglielmo@mediacomsrls.it")
     ).toBeVisible();
   });
 

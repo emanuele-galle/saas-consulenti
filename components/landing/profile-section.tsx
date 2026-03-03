@@ -104,7 +104,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.5, ease: "easeOut" }}
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.15em]"
-          style={{ color: "var(--generali-gold, #D4A537)" }}
+          style={{ color: "var(--accent-gold, #D4A537)" }}
         >
           Profilo
         </motion.p>
@@ -254,7 +254,7 @@ export function ProfileSection({ consultant }: ProfileSectionProps) {
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.35, ease: "easeOut" }}
                     className="mb-8 text-xs font-semibold uppercase tracking-[0.15em]"
-                    style={{ color: "var(--generali-gold, #D4A537)" }}
+                    style={{ color: "var(--accent-gold, #D4A537)" }}
                   >
                     Contatti
                   </motion.p>

@@ -87,8 +87,8 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
     jobTitle: consultant.role,
     worksFor: {
       "@type": "Organization",
-      name: "Generali Italia",
-      url: "https://www.generali.it",
+      name: "MediaCom",
+      url: "https://pieromuscari.it",
     },
     email: consultant.email,
     ...(consultant.phone && { telephone: consultant.phone }),

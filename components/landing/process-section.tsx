@@ -27,7 +27,7 @@ export function ProcessSection({ processData }: ProcessSectionProps) {
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <p
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.2em]"
-          style={{ color: "var(--generali-gold, #D4A537)" }}
+          style={{ color: "var(--accent-gold, #D4A537)" }}
         >
           Processo
         </p>

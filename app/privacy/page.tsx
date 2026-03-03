@@ -24,7 +24,7 @@ export default function PrivacyPage() {
 
           <h2>1. Titolare del Trattamento</h2>
           <p>
-            Il Titolare del trattamento dei dati personali è <strong>Generali Italia S.p.A.</strong>,
+            Il Titolare del trattamento dei dati personali è <strong>MediaCom srls</strong>,
             con sede legale in Mogliano Veneto (TV), Via Marocchesa 14.
           </p>
           <p>

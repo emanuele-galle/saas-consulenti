@@ -431,7 +431,7 @@ export function ConsultantForm({
               <Input
                 {...register("consultantEmail")}
                 type="email"
-                placeholder="giuseppe.guglielmo@generali.it"
+                placeholder="info@mediacomsrls.it"
               />
               {errors.consultantEmail && (
                 <p className="text-sm text-destructive">
@@ -498,7 +498,7 @@ export function ConsultantForm({
               <Input
                 {...register("email")}
                 type="email"
-                placeholder="giuseppe.guglielmo@generali.it"
+                placeholder="info@mediacomsrls.it"
               />
               {errors.email && (
                 <p className="text-sm text-destructive">
@@ -535,7 +535,7 @@ export function ConsultantForm({
             <Label>Seleziona colore principale</Label>
             <div className="flex flex-wrap gap-3">
               {[
-                { label: "Generali Red", value: "#C21D17" },
+                { label: "MediaCom Red", value: "#C21D17" },
                 { label: "Navy Blue", value: "#1B3A5C" },
                 { label: "Forest Green", value: "#2D6A4F" },
                 { label: "Royal Purple", value: "#6B21A8" },

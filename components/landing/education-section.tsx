@@ -37,7 +37,7 @@ export function EducationSection({ educationData }: EducationSectionProps) {
         {/* Kicker */}
         <p
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.15em]"
-          style={{ color: "var(--generali-gold, #D4A537)" }}
+          style={{ color: "var(--accent-gold, #D4A537)" }}
         >
           Certificazioni
         </p>

@@ -24,9 +24,9 @@ export default function LegalPage() {
 
           <h2>1. Informazioni Generali</h2>
           <p>
-            Questo sito web è una piattaforma SaaS che consente ai consulenti Generali Italia
+            Questo sito web è una piattaforma SaaS che consente ai consulenti MediaCom
             di creare e gestire la propria landing page professionale. La piattaforma è gestita
-            in collaborazione tra Generali Italia S.p.A. e i singoli consulenti.
+            in collaborazione tra MediaCom srls e i singoli consulenti.
           </p>
 
           <h2>2. Utilizzo del Sito</h2>
@@ -40,8 +40,8 @@ export default function LegalPage() {
 
           <h2>3. Proprietà Intellettuale</h2>
           <p>
-            I marchi, loghi e contenuti relativi a Generali Italia sono di proprietà di
-            Generali Italia S.p.A. I contenuti delle singole landing page sono di proprietà
+            I marchi, loghi e contenuti relativi a MediaCom sono di proprietà di
+            MediaCom srls I contenuti delle singole landing page sono di proprietà
             dei rispettivi consulenti. La piattaforma tecnologica è di proprietà di Fodi S.r.l.
             È vietata la riproduzione senza autorizzazione scritta.
           </p>

@@ -70,7 +70,7 @@ export default function ForgotPasswordPage() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="email@generali.it"
+              placeholder="email@mediacomsrls.it"
               required
             />
           </div>

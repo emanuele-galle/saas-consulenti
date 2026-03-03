@@ -129,7 +129,7 @@ export function LandingFooter({
         {/* Bottom */}
         <div className="mt-14 flex flex-col items-center gap-4 border-t border-white/[0.06] pt-8 md:flex-row md:justify-between">
           <p className="text-sm text-white">
-            &copy; {new Date().getFullYear()} Generali Italia S.p.A.
+            &copy; {new Date().getFullYear()} MediaCom srls
           </p>
 
           <div className="flex items-center gap-5">

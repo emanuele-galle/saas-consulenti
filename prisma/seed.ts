@@ -19,7 +19,7 @@ async function main() {
     create: {
       email: "admin@saas-consulenti.it",
       password: adminPassword,
-      name: "Admin Generali",
+      name: "Admin MediaCom",
       role: "ADMIN",
     },
   });
@@ -28,10 +28,10 @@ async function main() {
   // Create demo consultant user
   const consultantPassword = await bcrypt.hash("consulente2026!", 12);
   const consultantUser = await prisma.user.upsert({
-    where: { email: "giuseppe.guglielmo@generali.it" },
+    where: { email: "giuseppe.guglielmo@mediacomsrls.it" },
     update: {},
     create: {
-      email: "giuseppe.guglielmo@generali.it",
+      email: "giuseppe.guglielmo@mediacomsrls.it",
       password: consultantPassword,
       name: "Giuseppe Guglielmo",
       role: "CONSULTANT",
@@ -50,7 +50,7 @@ async function main() {
       role: "Executive Manager",
       network: "Rete Private e Wealth",
       bio: "Trasparenza, serietà e professionalità: sono queste le qualità che un Executive Manager mette ogni giorno al servizio dei propri clienti. L'obiettivo è offrire soluzioni personalizzate di wealth management, con un approccio orientato all'innovazione e alla sostenibilità.",
-      email: "giuseppe.guglielmo@generali.it",
+      email: "giuseppe.guglielmo@mediacomsrls.it",
       phone: "02/72436111",
       mobile: "3482290990",
       address: "Corso Italia 6",
@@ -75,11 +75,11 @@ async function main() {
       status: "PUBLISHED",
       coverData: {
         headline: "Il tuo futuro finanziario, la nostra missione",
-        subheadline: "Executive Manager - Banca Generali Private",
+        subheadline: "Executive Manager - MediaCom srls",
         ctaText: "Chiedi un appuntamento",
       },
       summaryData: {
-        text: "Trasparenza, serietà e professionalità: sono queste le qualità che un Executive Manager di Banca Generali Private mette ogni giorno al servizio dei propri clienti. Con oltre 15 anni di esperienza nel wealth management, mi dedico a costruire soluzioni personalizzate per proteggere e far crescere il patrimonio dei miei clienti.",
+        text: "Trasparenza, serietà e professionalità: sono queste le qualità che un Executive Manager di MediaCom srls mette ogni giorno al servizio dei propri clienti. Con oltre 15 anni di esperienza nel wealth management, mi dedico a costruire soluzioni personalizzate per proteggere e far crescere il patrimonio dei miei clienti.",
         highlights: [
           "Oltre 15 anni di esperienza",
           "Gestione patrimoniale personalizzata",
@@ -104,13 +104,13 @@ async function main() {
       experiencesData: {
         experiences: [
           {
-            company: "Banca Generali Private",
+            company: "MediaCom srls",
             role: "Executive Manager",
             period: "2018 - Presente",
             description: "Gestione di un portafoglio clienti HNWI con focus su soluzioni di investimento personalizzate.",
           },
           {
-            company: "Banca Generali",
+            company: "MediaCom",
             role: "Senior Financial Advisor",
             period: "2012 - 2018",
             description: "Consulenza finanziaria per clienti private con patrimoni significativi.",
@@ -136,8 +136,8 @@ async function main() {
       },
       bannerData: {
         imageUrl: "",
-        linkUrl: "https://www.bancagenerali.it",
-        altText: "Banca Generali Private - La tua banca privata",
+        linkUrl: "https://pieromuscari.it",
+        altText: "MediaCom srls - La tua banca privata",
       },
       focusOnData: {
         articles: [
@@ -161,8 +161,8 @@ async function main() {
           },
         ],
       },
-      metaTitle: "Giuseppe Guglielmo - Executive Manager | Generali",
-      metaDescription: "Giuseppe Guglielmo, Executive Manager presso Banca Generali Private a Milano. Consulenza finanziaria personalizzata, wealth management e investimenti sostenibili.",
+      metaTitle: "Giuseppe Guglielmo - Executive Manager | MediaCom",
+      metaDescription: "Giuseppe Guglielmo, Executive Manager presso MediaCom srls a Milano. Consulenza finanziaria personalizzata, wealth management e investimenti sostenibili.",
     },
   });
   console.log(`Landing page created: ${landingPage.slug}`);

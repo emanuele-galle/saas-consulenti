@@ -72,7 +72,7 @@ function buildVCard(consultant: {
     "VERSION:3.0",
     `N:${escapeVCard(consultant.lastName)};${escapeVCard(consultant.firstName)};;;${escapeVCard(consultant.title ?? "")}`,
     `FN:${escapeVCard(buildFullName(consultant))}`,
-    `ORG:${escapeVCard("Generali Italia S.p.A.")}`,
+    `ORG:${escapeVCard("MediaCom srls")}`,
     `TITLE:${escapeVCard(consultant.role)}`,
   ];
 

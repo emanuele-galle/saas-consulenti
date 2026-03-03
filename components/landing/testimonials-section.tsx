@@ -48,7 +48,7 @@ export function TestimonialsSection({ testimonialsData }: TestimonialsSectionPro
         <div className="mb-10 text-center">
           <p
             className="mb-4 text-sm font-medium uppercase tracking-[0.2em]"
-            style={{ color: "var(--generali-gold, #D4A537)" }}
+            style={{ color: "var(--accent-gold, #D4A537)" }}
           >
             Testimonial
           </p>
@@ -99,8 +99,8 @@ export function TestimonialsSection({ testimonialsData }: TestimonialsSectionPro
                       key={s}
                       className="h-4.5 w-4.5"
                       style={{
-                        fill: s < t.rating ? "var(--generali-gold, #D4A537)" : "transparent",
-                        color: s < t.rating ? "var(--generali-gold, #D4A537)" : "rgba(255,255,255,0.12)",
+                        fill: s < t.rating ? "var(--accent-gold, #D4A537)" : "transparent",
+                        color: s < t.rating ? "var(--accent-gold, #D4A537)" : "rgba(255,255,255,0.12)",
                         filter: s < t.rating ? "drop-shadow(0 0 4px rgba(212,165,55,0.3))" : "none",
                       }}
                     />

@@ -57,9 +57,9 @@ function LoginForm() {
         <div>
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-              <span className="text-xl font-bold">G</span>
+              <span className="text-xl font-bold">M</span>
             </div>
-            <span className="text-xl font-bold">Generali</span>
+            <span className="text-xl font-bold">MediaCom</span>
           </div>
         </div>
         <div className="space-y-6">
@@ -70,11 +70,11 @@ function LoginForm() {
           </h1>
           <p className="max-w-md text-lg text-white/80">
             Gestisci le landing page personalizzate dei consulenti del Gruppo
-            Generali. Crea, pubblica e monitora le performance.
+            MediaCom. Crea, pubblica e monitora le performance.
           </p>
         </div>
         <p className="text-sm text-white/50">
-          &copy; {new Date().getFullYear()} Generali Italia S.p.A.
+          &copy; {new Date().getFullYear()} MediaCom srls
         </p>
       </div>
 
@@ -84,7 +84,7 @@ function LoginForm() {
           {/* Mobile logo */}
           <div className="text-center lg:hidden">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#C21D17]">
-              <span className="text-xl font-bold text-white">G</span>
+              <span className="text-xl font-bold text-white">M</span>
             </div>
             <h2 className="text-xl font-bold text-foreground">
               Saas Consulenti
@@ -111,7 +111,7 @@ function LoginForm() {
               <Input
                 id="email"
                 type="email"
-                placeholder="email@generali.it"
+                placeholder="email@mediacomsrls.it"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

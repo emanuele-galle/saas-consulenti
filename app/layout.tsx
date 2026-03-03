@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     follow: false,
   },
   icons: {
-    icon: "/images/generali-logo.svg",
+    icon: "/images/mediacom-logo.svg",
   },
   openGraph: {
     type: "website",

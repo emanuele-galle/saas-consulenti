@@ -85,7 +85,7 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
         {/* Kicker */}
         <p
           className="mb-3 text-center text-xs font-semibold uppercase tracking-[0.15em]"
-          style={{ color: "var(--generali-gold, #D4A537)" }}
+          style={{ color: "var(--accent-gold, #D4A537)" }}
         >
           Percorso
         </p>
@@ -122,7 +122,7 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
                     style={{
                       background: isExperience
                         ? "var(--theme-color, #C21D17)"
-                        : "var(--generali-gold, #D4A537)",
+                        : "var(--accent-gold, #D4A537)",
                       boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
                     }}
                   >
@@ -158,7 +158,7 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
                           style={{
                             background: isExperience
                               ? "linear-gradient(135deg, var(--theme-color, #C21D17), #e0342e)"
-                              : "linear-gradient(135deg, var(--generali-gold, #D4A537), #e8c96a)",
+                              : "linear-gradient(135deg, var(--accent-gold, #D4A537), #e8c96a)",
                           }}
                         >
                           {entry.period}
@@ -179,7 +179,7 @@ export function ExperiencesSection({ experiencesData, educationData }: Experienc
                           style={{
                             color: isExperience
                               ? "var(--theme-color, #C21D17)"
-                              : "var(--generali-gold, #D4A537)",
+                              : "var(--accent-gold, #D4A537)",
                           }}
                         />
                       </div>

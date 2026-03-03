@@ -104,7 +104,7 @@ export function CoverSection({ consultant, coverData }: CoverSectionProps) {
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.1, ease: [0.4, 0, 0.2, 1] }}
               className="mx-auto mb-6 h-[2px] w-12 origin-center lg:mx-0 lg:origin-left"
-              style={{ background: "var(--generali-gold, #D4A537)" }}
+              style={{ background: "var(--accent-gold, #D4A537)" }}
             />
 
             <motion.p

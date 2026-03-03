@@ -39,7 +39,7 @@ export function MapSection({ mapData }: MapSectionProps) {
           <div className="mb-12 text-center">
             <p
               className="mb-3 text-xs font-semibold uppercase tracking-[0.15em]"
-              style={{ color: "var(--generali-gold, #D4A537)" }}
+              style={{ color: "var(--accent-gold, #D4A537)" }}
             >
               Posizione
             </p>

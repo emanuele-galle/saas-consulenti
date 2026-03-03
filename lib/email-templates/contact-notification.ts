@@ -96,7 +96,7 @@ export function contactNotificationTemplate(data: ContactNotificationData): stri
           <tr>
             <td style="padding:16px 32px;background-color:#f5f5f5;text-align:center;">
               <p style="margin:0;color:#999;font-size:12px;">
-                Generali Italia - Piattaforma Landing Page Consulenti
+                MediaCom - Piattaforma Landing Page Consulenti
               </p>
             </td>
           </tr>

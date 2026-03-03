@@ -65,7 +65,7 @@ export function PortfolioSection({ portfolioData, focusOnData }: PortfolioSectio
         <div className="mb-10 text-center">
           <p
             className="mb-4 text-sm font-medium uppercase tracking-[0.2em]"
-            style={{ color: "var(--generali-gold, #D4A537)" }}
+            style={{ color: "var(--accent-gold, #D4A537)" }}
           >
             Portfolio
           </p>
@@ -117,7 +117,7 @@ export function PortfolioSection({ portfolioData, focusOnData }: PortfolioSectio
                 {activeCategory === cat && (
                   <span
                     className="absolute -bottom-0.5 left-1/2 h-0.5 w-8 -translate-x-1/2 rounded-full"
-                    style={{ background: "var(--generali-gold, #D4A537)" }}
+                    style={{ background: "var(--accent-gold, #D4A537)" }}
                   />
                 )}
               </button>

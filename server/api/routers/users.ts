@@ -44,7 +44,7 @@ function resetPasswordEmailTemplate(resetUrl: string): string {
           </tr>
           <tr>
             <td style="padding:16px 32px;background-color:#f5f5f5;text-align:center;">
-              <p style="margin:0;color:#999;font-size:12px;">Generali Italia - Piattaforma Landing Page Consulenti</p>
+              <p style="margin:0;color:#999;font-size:12px;">MediaCom - Piattaforma Landing Page Consulenti</p>
             </td>
           </tr>
         </table>
@@ -156,7 +156,7 @@ export const usersRouter = createTRPCRouter({
 
       sendEmail({
         to: input.email,
-        subject: "Reset Password - Piattaforma Generali",
+        subject: "Reset Password - Piattaforma MediaCom",
         html: resetPasswordEmailTemplate(resetUrl),
       }).catch((err) => {
         console.error("Failed to send reset email:", err);

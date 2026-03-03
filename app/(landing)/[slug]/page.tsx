@@ -41,10 +41,10 @@ export async function generateMetadata({
     .join(" ");
 
   const title =
-    landingPage.metaTitle ?? `${fullName} - ${consultant.role} | Generali`;
+    landingPage.metaTitle ?? `${fullName} - ${consultant.role} | MediaCom`;
   const description =
     landingPage.metaDescription ??
-    `Pagina personale di ${fullName}, ${consultant.role} presso Generali Italia.`;
+    `Pagina personale di ${fullName}, ${consultant.role} presso MediaCom.`;
 
   return {
     title,

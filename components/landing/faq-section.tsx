@@ -28,7 +28,7 @@ export function FaqSection({ faqData }: FaqSectionProps) {
         <div className="mb-10 text-center">
           <p
             className="mb-4 text-sm font-medium uppercase tracking-[0.2em]"
-            style={{ color: "var(--generali-gold, #D4A537)" }}
+            style={{ color: "var(--accent-gold, #D4A537)" }}
           >
             FAQ
           </p>

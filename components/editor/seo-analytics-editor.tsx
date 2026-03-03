@@ -75,10 +75,10 @@ export function SeoAnalyticsEditor({
   };
 
   // SERP Preview
-  const previewTitle = metaTitle || `Consulente - Generali`;
+  const previewTitle = metaTitle || `Consulente - MediaCom`;
   const previewDesc =
-    metaDescription || "Pagina personale del consulente presso Generali Italia.";
-  const previewUrl = `generali-consulenti.it/${slug}`;
+    metaDescription || "Pagina personale del consulente presso MediaCom Italia.";
+  const previewUrl = `mediacom-consulenti.it/${slug}`;
 
   return (
     <div className="space-y-6">

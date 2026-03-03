@@ -66,8 +66,8 @@ export function Sidebar() {
           onClick={isMobile ? close : undefined}
         >
           <NextImage
-            src="/images/generali-logo.svg"
-            alt="Generali"
+            src="/images/mediacom-logo.svg"
+            alt="MediaCom"
             width={120}
             height={40}
             priority

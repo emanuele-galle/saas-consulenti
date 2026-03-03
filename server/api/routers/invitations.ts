@@ -26,13 +26,13 @@ function invitationEmailTemplate(email: string, inviteUrl: string): string {
         <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff;border-radius:8px;overflow:hidden;">
           <tr>
             <td style="background-color:#C21D17;padding:24px 32px;">
-              <h1 style="color:#ffffff;margin:0;font-size:20px;">Invito Piattaforma Generali</h1>
+              <h1 style="color:#ffffff;margin:0;font-size:20px;">Invito Piattaforma MediaCom</h1>
             </td>
           </tr>
           <tr>
             <td style="padding:32px;">
               <p style="margin:0 0 16px;color:#333;font-size:15px;">
-                Sei stato invitato a registrarti sulla piattaforma Landing Page Consulenti Generali.
+                Sei stato invitato a registrarti sulla piattaforma Landing Page Consulenti MediaCom.
               </p>
               <p style="margin:0 0 24px;color:#333;font-size:15px;">
                 Clicca il pulsante qui sotto per completare la registrazione:
@@ -53,7 +53,7 @@ function invitationEmailTemplate(email: string, inviteUrl: string): string {
           </tr>
           <tr>
             <td style="padding:16px 32px;background-color:#f5f5f5;text-align:center;">
-              <p style="margin:0;color:#999;font-size:12px;">Generali Italia - Piattaforma Landing Page Consulenti</p>
+              <p style="margin:0;color:#999;font-size:12px;">MediaCom - Piattaforma Landing Page Consulenti</p>
             </td>
           </tr>
         </table>
@@ -120,7 +120,7 @@ export const invitationsRouter = createTRPCRouter({
 
       sendEmail({
         to: input.email,
-        subject: "Invito Piattaforma Landing Page Generali",
+        subject: "Invito Piattaforma Landing Page MediaCom",
         html: invitationEmailTemplate(input.email, inviteUrl),
       }).catch((err) => {
         console.error("Failed to send invitation email:", err);
@@ -300,7 +300,7 @@ export const invitationsRouter = createTRPCRouter({
 
       sendEmail({
         to: invitation.email,
-        subject: "Invito Piattaforma Landing Page Generali",
+        subject: "Invito Piattaforma Landing Page MediaCom",
         html: invitationEmailTemplate(invitation.email, inviteUrl),
       }).catch((err) => {
         console.error("Failed to send invitation email:", err);
