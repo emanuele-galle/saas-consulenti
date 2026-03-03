@@ -52,8 +52,9 @@ model Consultant {
   role         String  // "Executive Manager", "Financial Advisor", etc.
   network      String? // "Rete Private e Wealth", etc.
   bio          String? @db.Text
-  profileImage String? @map("profile_image")
-  themeColor   String? @map("theme_color")
+  profileImage         String? @map("profile_image")
+  profileImagePosition String? @map("profile_image_position")
+  themeColor           String? @map("theme_color")
 
   // Contatti
   email    String

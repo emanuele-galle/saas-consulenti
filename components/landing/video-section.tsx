@@ -15,6 +15,7 @@ interface VideoItem {
   id: string;
   url: string;
   title?: string;
+  aspectRatio?: "16:9" | "9:16";
 }
 
 interface VideoData {
@@ -132,7 +133,7 @@ function VideoCard({
           e.currentTarget.style.boxShadow = "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)";
         }}
       >
-        <div className="relative w-full overflow-hidden" style={{ aspectRatio: "16/9" }}>
+        <div className="relative w-full overflow-hidden" style={{ aspectRatio: video.aspectRatio === "9:16" ? "9/16" : "16/9" }}>
           {thumbnail ? (
             <Image
               src={thumbnail}
@@ -306,7 +307,7 @@ function VideoModal({
       )}
 
       <div
-        className="relative mx-auto w-full max-w-4xl px-4"
+        className={`relative mx-auto w-full px-4 ${current.aspectRatio === "9:16" ? "max-w-sm" : "max-w-4xl"}`}
         style={{ maxHeight: "85vh" }}
         onClick={(e) => e.stopPropagation()}
       >
@@ -314,7 +315,7 @@ function VideoModal({
           <CustomVideoPlayer
             key={`${current.id}-${currentIndex}`}
             videoUrl={current.url}
-            aspectRatio="16:9"
+            aspectRatio={current.aspectRatio || "16:9"}
             autoPlay
           />
         </div>
@@ -352,7 +353,7 @@ export function VideoSection({ videoData }: VideoSectionProps) {
             className="overflow-hidden rounded-2xl"
             style={{ boxShadow: "0 16px 48px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06)" }}
           >
-            <CustomVideoPlayer videoUrl={videos[0].url} aspectRatio="16:9" />
+            <CustomVideoPlayer videoUrl={videos[0].url} aspectRatio={videos[0].aspectRatio || "16:9"} />
           </div>
         </div>
       </section>

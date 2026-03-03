@@ -91,6 +91,11 @@ export function ProfileEditor({ consultantId }: ProfileEditorProps) {
                 alt={fullName}
                 fill
                 className="object-cover"
+                style={
+                  consultant.profileImagePosition
+                    ? { objectPosition: consultant.profileImagePosition.split(" ").map((v) => `${v}%`).join(" ") }
+                    : undefined
+                }
                 unoptimized
               />
             ) : (

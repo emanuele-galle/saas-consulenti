@@ -122,7 +122,7 @@ function SkillTextContent({ skill }: { skill: Skill }) {
                 className="text-xs font-semibold uppercase tracking-wider"
                 style={{ color: "var(--theme-color, #C21D17)" }}
               >
-                Per chi
+                Destinatari
               </span>
               <p className="mt-1 text-sm leading-relaxed text-[#6B7280]">{skill.forWho}</p>
             </div>
@@ -133,7 +133,7 @@ function SkillTextContent({ skill }: { skill: Skill }) {
                 className="text-xs font-semibold uppercase tracking-wider"
                 style={{ color: "var(--theme-color, #C21D17)" }}
               >
-                Cosa faccio
+                Ambito di intervento
               </span>
               <p className="mt-1 text-sm leading-relaxed text-[#6B7280]">{skill.whatWeDo}</p>
             </div>
@@ -144,7 +144,7 @@ function SkillTextContent({ skill }: { skill: Skill }) {
                 className="text-xs font-semibold uppercase tracking-wider"
                 style={{ color: "var(--generali-gold, #D4A537)" }}
               >
-                Il beneficio
+                Valore generato
               </span>
               <p className="mt-1 text-sm font-medium text-[#1A1A1A]">{skill.benefit}</p>
             </div>

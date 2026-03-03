@@ -13,7 +13,7 @@ import { MethodSection } from "@/components/landing/method-section";
 import { StrengthsSection } from "@/components/landing/strengths-section";
 import { ExperiencesSection } from "@/components/landing/experiences-section";
 import { EducationSection } from "@/components/landing/education-section";
-import { InterestsSection } from "@/components/landing/interests-section";
+
 import { BannerSection } from "@/components/landing/banner-section";
 import { FocusOnSection } from "@/components/landing/focus-on-section";
 import { TestimonialsSection } from "@/components/landing/testimonials-section";
@@ -71,7 +71,6 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
   const hasStrengths = isJsonObject(landingPage.strengthsData);
   const hasExperiences = isJsonObject(landingPage.experiencesData);
   const hasEducation = isJsonObject(landingPage.educationData);
-  const hasInterests = isJsonObject(landingPage.interestsData);
   const hasBanner = isJsonObject(landingPage.bannerData);
   const hasFocusOn = isJsonObject(landingPage.focusOnData);
   const hasTestimonials = isJsonObject(landingPage.testimonialsData);
@@ -153,7 +152,18 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
           <ProfileSection consultant={consultant} />
         </AnimateOnScroll>
 
-        {/* 3. Values */}
+        {/* 3. Video (after profile) */}
+        {hasVideo && (
+          <SectionBackgroundWrapper background={extractBackground(landingPage.videoData)}>
+            <AnimateOnScroll variant="fade-up">
+              <VideoSection
+                videoData={landingPage.videoData as unknown as Parameters<typeof VideoSection>[0]["videoData"]}
+              />
+            </AnimateOnScroll>
+          </SectionBackgroundWrapper>
+        )}
+
+        {/* 4. Values */}
         {hasValues && (
           <SectionBackgroundWrapper background={extractBackground(landingPage.valuesData)}>
             <AnimateOnScroll variant="fade-up">
@@ -279,17 +289,6 @@ export function LandingLayout({ consultant, landingPage }: LandingLayoutProps) {
             <AnimateOnScroll variant="fade-up">
               <TestimonialsSection
                 testimonialsData={landingPage.testimonialsData as unknown as Parameters<typeof TestimonialsSection>[0]["testimonialsData"]}
-              />
-            </AnimateOnScroll>
-          </SectionBackgroundWrapper>
-        )}
-
-        {/* 16. Video */}
-        {hasVideo && (
-          <SectionBackgroundWrapper background={extractBackground(landingPage.videoData)}>
-            <AnimateOnScroll variant="fade-up">
-              <VideoSection
-                videoData={landingPage.videoData as unknown as Parameters<typeof VideoSection>[0]["videoData"]}
               />
             </AnimateOnScroll>
           </SectionBackgroundWrapper>

@@ -12,6 +12,7 @@ interface VideoItem {
   id: string;
   url: string;
   title?: string;
+  aspectRatio?: "16:9" | "9:16";
 }
 
 interface VideoData {
@@ -39,7 +40,7 @@ export function VideoEditor({ data, onChange }: VideoEditorProps) {
         ? [{ id: "legacy", url: data.videoUrl, title: data.title }]
         : [];
 
-  const { register, watch, control, setValue } = useForm<{
+  const { register, watch, control } = useForm<{
     title: string;
     description: string;
     videos: VideoItem[];
@@ -205,6 +206,18 @@ export function VideoEditor({ data, onChange }: VideoEditorProps) {
                   placeholder="Titolo del video"
                   {...register(`videos.${index}.title`)}
                 />
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor={`video-format-${index}`}>Formato</Label>
+                <select
+                  id={`video-format-${index}`}
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                  {...register(`videos.${index}.aspectRatio`)}
+                >
+                  <option value="16:9">Orizzontale (16:9)</option>
+                  <option value="9:16">Verticale - Reel (9:16)</option>
+                </select>
               </div>
             </div>
           </div>

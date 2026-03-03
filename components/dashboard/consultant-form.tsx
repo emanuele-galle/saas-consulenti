@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,7 +21,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CONSULTANT_ROLES, CONSULTANT_NETWORKS, CONSULTANT_TITLES } from "@/lib/constants";
-import { Camera, Loader2 } from "lucide-react";
+import { Camera, Crosshair, Loader2, RotateCcw } from "lucide-react";
 
 const consultantFormSchema = z.object({
   email: z.string().email("Email non valida"),
@@ -54,11 +54,21 @@ const consultantFormSchema = z.object({
 
 export type ConsultantFormData = z.infer<typeof consultantFormSchema>;
 
+function parsePosition(pos: string | null | undefined): { x: number; y: number } {
+  if (!pos) return { x: 50, y: 50 };
+  const parts = pos.split(" ");
+  const x = parseInt(parts[0] ?? "50", 10);
+  const y = parseInt(parts[1] ?? "50", 10);
+  return { x: Number.isNaN(x) ? 50 : x, y: Number.isNaN(y) ? 50 : y };
+}
+
 interface ConsultantFormProps {
   defaultValues?: Partial<ConsultantFormData>;
   profileImageUrl?: string | null;
+  profileImagePosition?: string | null;
   onSubmit: (data: ConsultantFormData) => void;
   onProfileImageChange?: (url: string) => void;
+  onProfileImagePositionChange?: (position: string) => void;
   isLoading?: boolean;
   isEdit?: boolean;
 }
@@ -66,15 +76,42 @@ interface ConsultantFormProps {
 export function ConsultantForm({
   defaultValues,
   profileImageUrl,
+  profileImagePosition,
   onSubmit,
   onProfileImageChange,
+  onProfileImagePositionChange,
   isLoading,
   isEdit = false,
 }: ConsultantFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const pickerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
   const [uploading, setUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     profileImageUrl ?? null
+  );
+  const [focalPoint, setFocalPoint] = useState(() => parsePosition(profileImagePosition));
+
+  const updateFocalPoint = useCallback(
+    (x: number, y: number) => {
+      const clamped = { x: Math.round(Math.max(0, Math.min(100, x))), y: Math.round(Math.max(0, Math.min(100, y))) };
+      setFocalPoint(clamped);
+      onProfileImagePositionChange?.(`${clamped.x} ${clamped.y}`);
+    },
+    [onProfileImagePositionChange]
+  );
+
+  const handlePickerEvent = useCallback(
+    (e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) => {
+      const rect = pickerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+      const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+      const x = ((clientX - rect.left) / rect.width) * 100;
+      const y = ((clientY - rect.top) / rect.height) * 100;
+      updateFocalPoint(x, y);
+    },
+    [updateFocalPoint]
   );
 
   const {
@@ -131,15 +168,18 @@ export function ConsultantForm({
         <CardHeader>
           <CardTitle>Foto profilo</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="space-y-4">
           <div className="flex items-center gap-6">
-            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-muted">
+            <div
+              className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full bg-muted"
+            >
               {previewUrl ? (
                 <Image
                   src={previewUrl}
                   alt="Foto profilo"
                   fill
                   className="object-cover"
+                  style={{ objectPosition: `${focalPoint.x}% ${focalPoint.y}%` }}
                   unoptimized
                 />
               ) : (
@@ -175,6 +215,99 @@ export function ConsultantForm({
               </p>
             </div>
           </div>
+
+          {/* Focal Point Picker */}
+          {previewUrl && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Crosshair className="h-4 w-4 text-muted-foreground" />
+                <Label>Centramento foto</Label>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Clicca o trascina sull&apos;immagine per scegliere il punto focale. L&apos;anteprima circolare mostra il risultato.
+              </p>
+              <div className="flex flex-col items-start gap-6 sm:flex-row">
+                {/* Source image with crosshair */}
+                <div
+                  ref={pickerRef}
+                  className="relative w-full max-w-xs cursor-crosshair select-none overflow-hidden rounded-lg border bg-muted"
+                  style={{ aspectRatio: "1" }}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    isDragging.current = true;
+                    handlePickerEvent(e);
+                  }}
+                  onMouseMove={(e) => {
+                    if (isDragging.current) handlePickerEvent(e);
+                  }}
+                  onMouseUp={() => { isDragging.current = false; }}
+                  onMouseLeave={() => { isDragging.current = false; }}
+                  onTouchStart={(e) => {
+                    isDragging.current = true;
+                    handlePickerEvent(e);
+                  }}
+                  onTouchMove={(e) => {
+                    if (isDragging.current) handlePickerEvent(e);
+                  }}
+                  onTouchEnd={() => { isDragging.current = false; }}
+                >
+                  <Image
+                    src={previewUrl}
+                    alt="Seleziona punto focale"
+                    fill
+                    className="object-contain"
+                    unoptimized
+                    draggable={false}
+                  />
+                  {/* Crosshair indicator */}
+                  <div
+                    className="pointer-events-none absolute h-6 w-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,0.3)]"
+                    style={{
+                      left: `${focalPoint.x}%`,
+                      top: `${focalPoint.y}%`,
+                      background: "rgba(220, 38, 38, 0.5)",
+                    }}
+                  />
+                  {/* Crosshair lines */}
+                  <div
+                    className="pointer-events-none absolute h-px w-full bg-white/50"
+                    style={{ top: `${focalPoint.y}%` }}
+                  />
+                  <div
+                    className="pointer-events-none absolute h-full w-px bg-white/50"
+                    style={{ left: `${focalPoint.x}%` }}
+                  />
+                </div>
+
+                {/* Circular preview */}
+                <div className="flex flex-col items-center gap-2">
+                  <p className="text-xs font-medium text-muted-foreground">Anteprima</p>
+                  <div className="relative h-32 w-32 overflow-hidden rounded-full border-2 border-muted bg-muted">
+                    <Image
+                      src={previewUrl}
+                      alt="Anteprima circolare"
+                      fill
+                      className="object-cover"
+                      style={{ objectPosition: `${focalPoint.x}% ${focalPoint.y}%` }}
+                      unoptimized
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Reset button */}
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => updateFocalPoint(50, 50)}
+                className="text-xs"
+              >
+                <RotateCcw className="mr-1 h-3 w-3" />
+                Centra (50/50)
+              </Button>
+            </div>
+          )}
         </CardContent>
       </Card>
 

@@ -14,6 +14,7 @@ export default function NewConsultantPage() {
   const router = useRouter();
   const trpc = useTRPC();
   const profileImageRef = useRef<string | null>(null);
+  const profileImagePositionRef = useRef<string | null>(null);
 
   const createMutation = useMutation(
     trpc.consultants.create.mutationOptions({
@@ -36,6 +37,7 @@ export default function NewConsultantPage() {
       facebookUrl: data.facebookUrl || "",
       twitterUrl: data.twitterUrl || "",
       profileImage: profileImageRef.current || undefined,
+      profileImagePosition: profileImagePositionRef.current || undefined,
     });
   }
 
@@ -52,6 +54,7 @@ export default function NewConsultantPage() {
       <ConsultantForm
         onSubmit={handleSubmit}
         onProfileImageChange={(url) => { profileImageRef.current = url; }}
+        onProfileImagePositionChange={(pos) => { profileImagePositionRef.current = pos; }}
         isLoading={createMutation.isPending}
       />
     </div>

@@ -39,6 +39,7 @@ export default function EditConsultantPage() {
   const queryClient = useQueryClient();
   const id = params.id as string;
   const profileImageRef = useRef<string | undefined>(undefined);
+  const profileImagePositionRef = useRef<string | undefined>(undefined);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
 
@@ -46,10 +47,13 @@ export default function EditConsultantPage() {
     trpc.consultants.getById.queryOptions({ id })
   );
 
-  // Initialize the ref when consultant data loads
+  // Initialize the refs when consultant data loads
   useEffect(() => {
     if (consultant && profileImageRef.current === undefined) {
       profileImageRef.current = consultant.profileImage ?? undefined;
+    }
+    if (consultant && profileImagePositionRef.current === undefined) {
+      profileImagePositionRef.current = consultant.profileImagePosition ?? undefined;
     }
   }, [consultant]);
 
@@ -119,6 +123,7 @@ export default function EditConsultantPage() {
       network: data.network,
       bio: data.bio,
       profileImage: profileImageRef.current,
+      profileImagePosition: profileImagePositionRef.current,
       email: data.consultantEmail,
       phone: data.phone,
       mobile: data.mobile,
@@ -263,8 +268,12 @@ export default function EditConsultantPage() {
           themeColor: consultant.themeColor ?? undefined,
         }}
         profileImageUrl={consultant.profileImage}
+        profileImagePosition={consultant.profileImagePosition}
         onProfileImageChange={(url) => {
           profileImageRef.current = url;
+        }}
+        onProfileImagePositionChange={(pos) => {
+          profileImagePositionRef.current = pos;
         }}
         onSubmit={handleSubmit}
         isLoading={updateMutation.isPending}
