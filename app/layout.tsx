@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   description:
     "Piattaforma di gestione landing page personali per i consulenti del Gruppo.",
   robots: {
-    index: false,
-    follow: false,
+    index: true,
+    follow: true,
   },
   icons: {
     icon: "/images/mediacom-logo.svg",
